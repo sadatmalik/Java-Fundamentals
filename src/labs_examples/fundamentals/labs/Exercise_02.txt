@@ -4,21 +4,60 @@
 
 Initializing git folder
     1. In CodingNomads folder, create new folder git_practice
+    sadatmalik@Sadats-MacBook-Air CodingNomads % cd
+    sadatmalik@Sadats-MacBook-Air ~ % cd Desktop/java-projects/CodingNomads
+    sadatmalik@Sadats-MacBook-Air CodingNomads % mkdir git_practice
+
     2. Inside git_practice:
         a. Initialize folder as a git folder (make sure you are in the correct folder when initializing) by running
             the "git init" command within the git_practice folder.
+
+            sadatmalik@Sadats-MacBook-Air CodingNomads % cd git_practice
+            sadatmalik@Sadats-MacBook-Air git_practice % git init
+
+            hint: Using 'master' as the name for the initial branch. This default branch name
+            hint: is subject to change. To configure the initial branch name to use in all
+            hint: of your new repositories, which will suppress this warning, call:
+            hint:
+            hint: 	git config --global init.defaultBranch <name>
+            hint:
+            hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+            hint: 'development'. The just-created branch can be renamed via this command:
+            hint:
+            hint: 	git branch -m <name>
+            Initialized empty Git repository in /Users/sadatmalik/Desktop/java-projects/CodingNomads/git_practice/.git/
+
+
+
         b. Make new file
+        touch file.txt
+
         c. Add file
+        sadatmalik@Sadats-MacBook-Air git_practice % git add file.txt
+
         d. Commit file
+        sadatmalik@Sadats-MacBook-Air git_practice % git commit -m "adding file.txt"
+        [master (root-commit) 19220ab] adding file.txt
+         1 file changed, 0 insertions(+), 0 deletions(-)
+         create mode 100644 file.txt
+
         c. On Github, create new git_practice repository
+        OK, created
+
         d. Add this new GitHub repository as a new "remote" to your local Git repo. You can do this by using the command
             git remote add <ANY_NAME> <URL_OF_NEW_GITHUB_REPO.git>
+        sadatmalik@Sadats-MacBook-Air git_practice % git remote add origin https://github.com/sadatmalik/git_practice.git
+        sadatmalik@Sadats-MacBook-Air git_practice % git branch -M main
+
         d. Push commit file to Github
+        sadatmalik@Sadats-MacBook-Air git_practice % git push -u origin main
+
         e. Practice the following git flow until you feel comfortable:
             i.   Create or modify file
             ii.  Add file(s)
             iii. Commit file(s)
             iv.  Push file(s) to Github repository
+        OK, created, added, committed and pushed a second file : file2.txt
 
 Adding a remote
     1. Create new personal repository on Github named "git_practice_2".
@@ -26,9 +65,30 @@ Adding a remote
         (directions are provided on Github with new repo is created)
     3. Push local git repository to your Github using the new remote.
 
+    sadatmalik@Sadats-MacBook-Air git_practice % git remote add origin2 https://github.com/sadatmalik/git_practice_2.git
+    sadatmalik@Sadats-MacBook-Air git_practice % git branch -M main
+    sadatmalik@Sadats-MacBook-Air git_practice % git push -u origin2 main
+
+
 Cloning repository from Github
     1. Find a repository on Github
+    https://github.com/BruceEckel/TIJ4-code.git
+
     2. Clone repository to local machine
+    sadatmalik@Sadats-MacBook-Air CodingNomads % git clone https://github.com/BruceEckel/TIJ4-code.git tij4
+    Cloning into 'tij4'...
+    remote: Enumerating objects: 964, done.
+    remote: Total 964 (delta 0), reused 0 (delta 0), pack-reused 964
+    Receiving objects: 100% (964/964), 415.52 KiB | 2.79 MiB/s, done.
+    Resolving deltas: 100% (59/59), done.
+
     3. Create new repository on Github
+    https://github.com/sadatmalik/tij4.git
+
     4. Add new remote on local machine
+    sadatmalik@Sadats-MacBook-Air CodingNomads % cd tij4
+    sadatmalik@Sadats-MacBook-Air tij4 % git remote add sadat https://github.com/sadatmalik/tij4.git
+
     5. Push to new Github repository
+    sadatmalik@Sadats-MacBook-Air tij4 % git branch -M main
+    sadatmalik@Sadats-MacBook-Air tij4 % git push -u sadat main
