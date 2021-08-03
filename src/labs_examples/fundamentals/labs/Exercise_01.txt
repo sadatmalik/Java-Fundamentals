@@ -50,7 +50,7 @@ Fundamentals Exercise 1: CLI
          [esc]
          [:wq]
 
-         b. Use $ cat print contents of file
+         b. Use $ cat to print contents of file
          cat file.txt
          > some text
 
