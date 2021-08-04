@@ -14,6 +14,10 @@ import java.util.Scanner;
 
 public class Exercise_07 {
 
+    private static final int HOURS_IN_DAY = 24;
+    private static final int MINUTES_IN_HOUR = 60;
+    private static final int SECONDS_IN_MINUTE = 60;
+
     public static void main(String[] args) {
 
         // create scanner
@@ -24,6 +28,9 @@ public class Exercise_07 {
         int days = scanner.nextInt();
 
         // write completed code here
+        int seconds = days * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE;
+        System.out.println("Equals " + seconds + " seconds.");
+
 
     }
 }
