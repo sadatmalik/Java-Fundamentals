@@ -30,6 +30,6 @@ public class Exercise_07 {
         // write completed code here
         int seconds = days * HOURS_IN_DAY * MINUTES_IN_HOUR * SECONDS_IN_MINUTE;
         System.out.println("Equals " + seconds + " seconds.");
-        
+
     }
 }
