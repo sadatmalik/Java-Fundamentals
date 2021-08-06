@@ -8,4 +8,21 @@ package labs_examples.conditions_loops.labs;
  */
 
 public class Exercise_08 {
+
+    public static void main(String[] args) {
+        int i = 1000;
+        int count = 1;
+        do {
+            if (count == 1 || count == 2) {
+                count++;
+                i--;
+                continue;
+            }
+
+            System.out.println(i);
+            count = 1;
+            i--;
+
+        } while (i > 0);
+    }
 }
