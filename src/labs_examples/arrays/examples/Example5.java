@@ -31,6 +31,14 @@ class Bubble {
             }
         }
 
+        // display sorted array:
+        System.out.print("Sorted array is:");
+        for(int i=0; i < str.length; i++)
+            System.out.print(" " + str[i]);
+
+        System.out.println();
+
+
         String str2 = "sorter";
         int i = str2.indexOf('r');
         int y = str2.lastIndexOf('r');
