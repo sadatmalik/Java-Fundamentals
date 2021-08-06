@@ -9,7 +9,7 @@ class StrOps {
         int result, idx;
 
         if (str1.equalsIgnoreCase(str2)){
-            System.out.println("this shouldn't print");
+            System.out.println("this should print");
         }
 
         System.out.println("Length of str1: " +
