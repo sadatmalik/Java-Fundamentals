@@ -62,6 +62,19 @@ public class MethodTraining {
         System.out.println(minMax[0] + " " + minMax[1]);
 
 
+        // Divisible
+        System.out.println("\n--divisible");
+        ArrayList<Integer> arrayList = divisible(50, 3, 4);
+        System.out.println("Total divisibles = " + arrayList.size());
+
+        // Reverse
+        System.out.println("\n--reverse");
+        System.out.print("Reverse string array: ");
+        String[] strings = {"Sadat", "Malik", "was", "here!"};
+        printArray(strings);
+        reverseArray(strings);
+        System.out.print("Reversed: ");
+        printArray(strings);
     }
 
     //     1) Demonstrate method overloading in this class
@@ -144,6 +157,42 @@ public class MethodTraining {
 
         // int[] minMax = {min, max};
         return new int[] {min, max};
+    }
+
+    //     7) Write a method that takes 3 arguments (int maxNum, int divisor1, int divisor2) and
+    //     returns an Integer Arraylist. In this method create an Integer ArrayList and populate it
+    //     with each number between zero and maxNum that is divisible by both divisor1 and divisor2.
+    //     Then return this ArrayList. After calling this method, print out the length of the
+    //     returned list
+    public static ArrayList<Integer> divisible(int maxNum, int divisor1, int divisor2) {
+        ArrayList<Integer> divisibles = new ArrayList<>();
+        for (int i = 0; i <= maxNum; i++) {
+            if (i % divisor1 == 0 && i % divisor2 == 0) {
+                System.out.println(i + " is divisible by " + divisor1 + " and " + divisor2);
+                divisibles.add(i);
+            }
+        }
+        return divisibles;
+    }
+
+    //    8) Write a method that will reverse an array in place using only one extra temp variable. For
+    //    this exercise you cannot instantiate a second array. You must reverse the array in place using
+    //    only one extra temp variable. Hint: this variable is used to temporarily store individual values
+    //    in the array
+    public static void reverseArray(String[] a) {
+        String temp = null;
+        for (int i = 0; i < a.length/2; i++) {
+            temp = a[i];
+            a[i] = a[a.length - (i+1)];
+            a[a.length - (i+1)] = temp;
+        }
+    }
+
+    public static void printArray(String[] strings) {
+        for (String s : strings) {
+            System.out.print(s + " ");
+        }
+        System.out.println();
     }
 
 }
