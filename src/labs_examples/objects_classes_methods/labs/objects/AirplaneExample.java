@@ -18,7 +18,7 @@ public class AirplaneExample {
         System.out.println(plane + "\n");
 
         // Demonstrate getting the crew names:
-        System.out.println("Get crew names = " + Arrays.toString(plane.getCrew().names) + "\n");
+        System.out.println("Get crew names = " + Arrays.toString(plane.getCrew().getNames()) + "\n");
 
         // Demonstrate changing the pilot
         plane.setPilot(new Pilot("Sandra Jones", 52, 17));
@@ -129,9 +129,9 @@ class Airplane {
 }
 
 class FlightPath {
-    String origin;
-    String destination;
-    int distance;
+    private String origin;
+    private String destination;
+    private int distance;
 
     public FlightPath(String origin, String destination, int distance) {
         this.origin = origin;
@@ -174,9 +174,9 @@ class FlightPath {
 }
 
 class Cockpit {
-    int numSeats;
-    int capacity;
-    Dashboard dash;
+    private int numSeats;
+    private int capacity;
+    private Dashboard dash;
 
     public Cockpit(int numSeats, int capacity, Dashboard dash) {
         this.numSeats = numSeats;
@@ -219,8 +219,8 @@ class Cockpit {
 }
 
 class Dashboard {
-    String colour;
-    int numDials;
+    private String colour;
+    private int numDials;
 
     public Dashboard(String colour, int numDials) {
         this.colour = colour;
@@ -253,9 +253,9 @@ class Dashboard {
 }
 
 class Pilot {
-    String name;
-    int age;
-    int yearsExperience;
+    private String name;
+    private int age;
+    private int yearsExperience;
 
     public Pilot(String name, int age, int yearsExperience) {
         this.name = name;
@@ -298,9 +298,9 @@ class Pilot {
 }
 
 class Crew {
-    int members;
-    String uniformColour;
-    String[] names;
+    private int members;
+    private String uniformColour;
+    private String[] names;
 
     public Crew(int members, String uniformColour, String[] names) {
         this.members = members;
