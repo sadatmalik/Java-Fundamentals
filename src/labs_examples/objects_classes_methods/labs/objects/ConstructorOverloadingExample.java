@@ -11,10 +11,13 @@ public class ConstructorOverloadingExample {
 
     public static void main(String[] args) {
         Fruit fruit = new Fruit();
+        System.out.println(fruit.toString());
 
         Fruit banana = new Fruit("Banana");
+        System.out.println(banana.toString());
 
         Fruit greenApple = new Fruit("Apple", "Green");
+        System.out.println(greenApple.toString());
     }
 }
 
@@ -33,5 +36,29 @@ class Fruit {
     public Fruit(String name, String colour) {
         this.name = name;
         this.colour = colour;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    @Override
+    public String toString() {
+        return "Fruit{" +
+                "name='" + name + '\'' +
+                ", colour='" + colour + '\'' +
+                '}';
     }
 }
