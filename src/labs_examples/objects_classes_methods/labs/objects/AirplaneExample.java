@@ -15,7 +15,14 @@ public class AirplaneExample {
 
         Airplane plane = new Airplane(path, engine, pit, pilot, crew, 230, 10000, 10000);
 
-        System.out.println(plane);
+        System.out.println(plane + "\n");
+
+        // Demonstrate getting the crew names:
+        System.out.println("Get crew names = " + Arrays.toString(plane.getCrew().names) + "\n");
+
+        // Demonstrate changing the pilot
+        plane.setPilot(new Pilot("Sandra Jones", 52, 17));
+        System.out.println("Set new pilot = " + plane.getPilot());
     }
 }
 
