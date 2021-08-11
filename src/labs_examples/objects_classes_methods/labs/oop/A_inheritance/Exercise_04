@@ -1,7 +1,7 @@
 
 Without running the code below, please tell me what it will print.
 
-
+: Child called  (because Child extends Parent and overrides the doSomething() method with its own implementation)
 
 public class InheritanceTest
 {
