@@ -1,7 +1,11 @@
 
 Without running the code below, please tell me what will print. Why?
 
+: Parent called
+: Child called
 
+The parent must exist before the child. The call to Child() contains an implicit super() call to Parent(). In other
+words, Parent() executes before Child().
 
 
 public class InheritanceTest
