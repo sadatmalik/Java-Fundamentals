@@ -3,7 +3,9 @@ package labs_examples.objects_classes_methods.labs.oop.A_inheritance;
 /**
  * Run the class below and study the output. What prints and why?
  *
- * Your answer:
+ * Your answer: 10
+ * The value of i in class A is 10. i's value in A is printed because the type of the a variable in main() is declared as A.
+ * If it is declared to be of type B then the value of i in class B is printed.
  *
  */
 class A {
