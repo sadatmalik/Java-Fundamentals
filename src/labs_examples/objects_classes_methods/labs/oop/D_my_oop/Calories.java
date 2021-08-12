@@ -37,5 +37,7 @@ public class Calories {
         return gainCalories;
     }
 
-
+    public Weight getWeight() {
+        return weight;
+    }
 }

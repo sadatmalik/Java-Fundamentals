@@ -11,6 +11,16 @@ public class Weight {
     private double upperThreshold;
     private double lowerThreshold;
 
+    private BodyFat bodyFat;
+
+    public BodyFat getBodyFat() {
+        return bodyFat;
+    }
+
+    public void setBodyFat(BodyFat bodyFat) {
+        this.bodyFat = bodyFat;
+    }
+
     public Weight() {
         week = new double[7];
         average = 0;
@@ -47,4 +57,13 @@ public class Weight {
         }
         return lowerThreshold;
     }
+
+    public double getIdealWeightInKg() {
+        return getAverage() * (1 - (bodyFat.getCurrentBodyFat() - bodyFat.getIdealBodyFat()));
+    }
+
+    public double getIdealWeightInPounds() {
+        return getAverage() * POUNDS_PER_KILO * (1 - (bodyFat.getCurrentBodyFat() - bodyFat.getIdealBodyFat()));
+    }
+
 }

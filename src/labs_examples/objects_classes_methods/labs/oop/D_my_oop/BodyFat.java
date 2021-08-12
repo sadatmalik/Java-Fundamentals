@@ -17,8 +17,4 @@ public class BodyFat {
     public double getCurrentBodyFat() {
         return currentBodyFat;
     }
-
-    public double getIdealWeight(Weight weight) {
-        return weight.getAverage() * (1 - (currentBodyFat - idealBodyFat));
-    }
 }
