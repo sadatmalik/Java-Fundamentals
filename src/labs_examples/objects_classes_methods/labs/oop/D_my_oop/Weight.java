@@ -2,8 +2,9 @@ package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
 public class Weight {
 
-    private static final double MONTH_LOWER_TARGET_GAIN = 1 / 2.205;
-    private static final double MONTH_UPPER_TARGET_GAIN = 1.5 / 2.205;
+    public static final double POUNDS_PER_KILO = 2.205;
+    private static final double MONTH_LOWER_TARGET_GAIN = 1 / POUNDS_PER_KILO;
+    private static final double MONTH_UPPER_TARGET_GAIN = 1.5 / POUNDS_PER_KILO;
 
     private double[] week;
     private double average;

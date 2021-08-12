@@ -15,7 +15,7 @@ public class Controller {
             week[i] = scanner.nextDouble();
         }
 
-        // Calculate average for week and next week's target range
+        // Get average for week and next week's target range
         double average = weight.getAverage();
         double upper = weight.getUpperThreshold();
         double lower = weight.getLowerThreshold();
@@ -23,6 +23,10 @@ public class Controller {
         System.out.println("Average current weight = " + average);
         System.out.println("Upper target limit for next week = " + upper);
         System.out.println("Lower target limit for next week = " + lower);
+
+        // Get maintenance calories
+        Calories cal = new Calories(weight);
+        System.out.println("Maintenance calories = " + cal.getMaintenance()[0] + " / " + cal.getMaintenance()[1]);
     }
 
 
