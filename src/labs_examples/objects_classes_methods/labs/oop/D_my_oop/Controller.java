@@ -33,6 +33,11 @@ public class Controller {
 
         // Get ideal weight
         System.out.println("Ideal weight = " + fat.getIdealWeight(weight));
+
+        // Get weight gain calories for 3 and 4 training days per week:
+        System.out.println("Training day calories for 3 workout days per week = " + cal.getWeightGainCalories(3));
+        System.out.println("Training day calories for 4 workout days per week = " + cal.getWeightGainCalories(4));
+        System.out.println("Non training day calories = " + cal.MIFFLIN_ST_JOUR_MAINTENANCE);
     }
 
 
