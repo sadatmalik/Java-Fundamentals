@@ -1,0 +1,29 @@
+package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
+
+import java.util.Scanner;
+
+public class Controller {
+
+    public static void main(String[] args) {
+        Weight weight = new Weight();
+        double[] week = weight.getWeek();
+
+        // Populate a week's weights
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < 7; i++) {
+            System.out.print("Input weight for day " + i + ": ");
+            week[i] = scanner.nextDouble();
+        }
+
+        // Calculate average for week and next week's target range
+        double average = weight.getAverage();
+        double upper = weight.getUpperThreshold();
+        double lower = weight.getLowerThreshold();
+
+        System.out.println("Average current weight = " + average);
+        System.out.println("Upper target limit for next week = " + upper);
+        System.out.println("Lower target limit for next week = " + lower);
+    }
+
+
+}
