@@ -27,6 +27,12 @@ public class Controller {
         // Get maintenance calories
         Calories cal = new Calories(weight);
         System.out.println("Maintenance calories = " + cal.getMaintenance()[0] + " / " + cal.getMaintenance()[1]);
+
+        // Set ideal and current body fat percentages
+        BodyFat fat = new BodyFat(10d, 20d);
+
+        // Get ideal weight
+        System.out.println("Ideal weight = " + fat.getIdealWeight(weight));
     }
 
 
