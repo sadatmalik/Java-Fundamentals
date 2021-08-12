@@ -6,9 +6,13 @@ public class Player {
     private int potValue;
 
     public Player(String name) {
+        this(name, 0);
+    }
+
+    public Player(String name, int potValue) {
         this.name = name;
         this.hand = new Hand();
-        this.potValue = 0;
+        this.potValue = potValue;
     }
 
     public boolean computerAI() {
@@ -27,8 +31,8 @@ public class Player {
         return hand;
     }
 
-    public void setHand(Hand hand) {
-        this.hand = hand;
+    public void newHand() {
+        this.hand = new Hand();
     }
 
     public int getPotValue() {

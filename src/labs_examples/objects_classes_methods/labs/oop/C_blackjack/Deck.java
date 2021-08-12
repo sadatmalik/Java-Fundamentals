@@ -13,6 +13,11 @@ public class Deck {
         usedCards = new ArrayList<>();
     }
 
+    public void newDeck() {
+        cards = new Card[52];
+        usedCards = new ArrayList<>();
+    }
+
     public void populateCards() {
         int count = 0;
         for (int suit = 0; suit < Card.getSuit().length; suit++) {
@@ -26,12 +31,20 @@ public class Deck {
     public void deal(Player player) {
         Random rand = new Random();
         int nextCard = rand.nextInt(52);
+
         while(usedCards.contains(nextCard)) {
-            nextCard = rand.nextInt();
+            nextCard = rand.nextInt(52);
         }
 
-        player.getHand().addCard(cards[nextCard-1]);
-        usedCards.add(nextCard);
+        try {
+            player.getHand().addCard(cards[nextCard]);
+            usedCards.add(nextCard);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            System.out.println("Attempting to retrieve card #" + nextCard);
+            ex.printStackTrace();
+        }
+
+        // System.out.println(player.getName() + " dealt " + cards[nextCard]);
     }
 
     @Override
@@ -41,19 +54,4 @@ public class Deck {
                 '}';
     }
 
-    public Card[] getCards() {
-        return cards;
-    }
-
-    public void setCards(Card[] cards) {
-        this.cards = cards;
-    }
-
-    public ArrayList<Integer> getUsedCards() {
-        return usedCards;
-    }
-
-    public void setUsedCards(ArrayList<Integer> usedCards) {
-        this.usedCards = usedCards;
-    }
 }

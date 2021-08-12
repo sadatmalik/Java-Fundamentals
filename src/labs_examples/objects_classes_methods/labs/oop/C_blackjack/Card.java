@@ -28,7 +28,4 @@ public class Card {
         return cardValue;
     }
 
-    public void setCardValue(int cardValue) {
-        this.cardValue = cardValue;
-    }
 }

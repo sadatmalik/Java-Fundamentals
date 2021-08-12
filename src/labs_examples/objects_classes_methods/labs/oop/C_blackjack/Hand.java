@@ -24,10 +24,6 @@ public class Hand {
         return cards;
     }
 
-    public void setCards(ArrayList<Card> cards) {
-        this.cards = cards;
-    }
-
     public int getHandValue() {
         return handValue;
     }
