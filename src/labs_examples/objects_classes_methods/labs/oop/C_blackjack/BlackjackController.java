@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class BlackjackController {
 
+    static int betSize = 0;
+
     public static void main(String[] args) {
         // testGame();
 
@@ -18,7 +20,7 @@ public class BlackjackController {
         String name = scanner.next();
 
         System.out.print("Place your bet: ");
-        int betSize = scanner.nextInt();
+        betSize = scanner.nextInt();
 
         Player playerOne = new Player(name, 10);
         Player computer = new Player("Computer", 10);
@@ -37,6 +39,7 @@ public class BlackjackController {
             if (anotherCard.equalsIgnoreCase("yes")) {
                 deck.deal(playerOne);
                 showCards(playerOne);
+                playerOneDealt = true;
             } else {
                 playerOneDealt = false;
             }
@@ -45,6 +48,7 @@ public class BlackjackController {
             if (cardForComputer) {
                 deck.deal(computer);
                 System.out.println("Computer takes another card");
+                computerDealt = true;
             } else {
                 System.out.println("Computer declines another card");
                 computerDealt = false;
@@ -96,24 +100,34 @@ public class BlackjackController {
             if (p1.getHand().getHandValue() > p2.getHand().getHandValue()) {
                 // p1 wins
                 System.out.println(p1.getName() + " wins!");
+                settleBets(p1, p2);
+
             } else if (p1.getHand().getHandValue() == p2.getHand().getHandValue()) {
                 // draw
                 System.out.println("It's a draw!");
             } else {
                 // p2 wins
                 System.out.println(p2.getName() + " wins!");
+                settleBets(p2, p1);
             }
         } else if (!p1.getHand().isBust() && p2.getHand().isBust()) {
-            // player wins
+            // p1 wins
             System.out.println(p1.getName() + " wins!");
+            settleBets(p1, p2);
         } else if (p1.getHand().isBust() && !p2.getHand().isBust()) {
-            // computer wins
+            // p2 wins
             System.out.println(p2.getName() + " wins!");
+            settleBets(p2, p1);
         } else {
             // both lose
             System.out.println("You're both bust!");
         }
 
+    }
+
+    private static void settleBets(Player winner, Player loser) {
+        loser.setPotValue(loser.getPotValue() - betSize);
+        winner.setPotValue((winner.getPotValue()) + betSize);
     }
 
     private static void showCards(Player player) {
