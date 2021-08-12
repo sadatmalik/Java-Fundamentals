@@ -33,6 +33,16 @@ public class BlackjackController {
 
         while (true) {
 
+            if (playerOne.getPotValue() < betSize) {
+                System.out.println(playerOne.getName() + " can't afford to play any more -- minimum bet size " + betSize);
+                break;
+            }
+
+            if (computer.getPotValue() < betSize) {
+                System.out.println(computer.getName() + " can't afford to play any more -- minimum bet size " + betSize);
+                break;
+            }
+
             System.out.println("Would you like another card?");
             String anotherCard = scanner.next();
 
