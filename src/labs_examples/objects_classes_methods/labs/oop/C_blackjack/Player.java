@@ -7,6 +7,12 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+        this.hand = new Hand();
+        this.potValue = 0;
+    }
+
+    public boolean computerAI() {
+        return hand.getHandValue() < 16 ? true : false;
     }
 
     public String getName() {
