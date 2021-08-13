@@ -30,10 +30,10 @@ public class Macros {
         // fat & carbs
         int caloriesFromFat = 0;
         if (!gainCycle) {
-            caloriesFromFat = (int) (cal.getWeightLossCalories(true) * PERCENTAGE_CALORIES_FROM_FAT);
+            caloriesFromFat = (int) (cal.getWeightLossCalories(false) * PERCENTAGE_CALORIES_FROM_FAT);
             fat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
 
-            int remainingCalories = cal.getWeightLossCalories(true) - caloriesFromProtein - caloriesFromFat;
+            int remainingCalories = cal.getWeightLossCalories(false) - caloriesFromProtein - caloriesFromFat;
             carbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
 
         } else if (gainCycle && !trainingDay) {

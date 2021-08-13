@@ -13,4 +13,16 @@ Exercise Progress Tracker
 
 Ability to enter daily weight for a 7 day period
 Calculate average weight and upper/lower target range
+Maintenance calorie calculations
+Ideal body weight calculation
+Gain/loss cycle calories
+Intake macros for gain/loss cycle
+
+Todo:
+Mifflin formula and a Mifflin calculation mode selector
+Manual override for maintenance calorie levels
+Add a DB/persistence layer for historical data
+Add charting function for historical data
+Create a front end for data entry and display
+Add a exercise weight / composition progress tracker
 

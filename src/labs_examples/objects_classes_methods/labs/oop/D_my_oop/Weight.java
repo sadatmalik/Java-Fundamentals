@@ -2,6 +2,8 @@ package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
 public class Weight {
 
+    public double startingWeight = 83.4; // kg
+
     public static final double POUNDS_PER_KILO = 2.205;
     private static final double MONTH_LOWER_TARGET_GAIN = 1 / POUNDS_PER_KILO;
     private static final double MONTH_UPPER_TARGET_GAIN = 1.5 / POUNDS_PER_KILO;
@@ -59,11 +61,11 @@ public class Weight {
     }
 
     public double getIdealWeightInKg() {
-        return getAverage() * (1 - (bodyFat.getCurrentBodyFat() - bodyFat.getIdealBodyFat()));
+        return startingWeight * (1 - (bodyFat.getCurrentBodyFat() - bodyFat.getIdealBodyFat()));
     }
 
     public double getIdealWeightInPounds() {
-        return getAverage() * POUNDS_PER_KILO * (1 - (bodyFat.getCurrentBodyFat() - bodyFat.getIdealBodyFat()));
+        return startingWeight * POUNDS_PER_KILO * (1 - (bodyFat.getCurrentBodyFat() - bodyFat.getIdealBodyFat()));
     }
 
 }
