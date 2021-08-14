@@ -1,5 +1,9 @@
 package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
+// @todo : 14/08/2021
+// Mifflin formula and a Mifflin calculation mode selector
+// Manual override for maintenance calorie levels
+
 public class Calories {
 
     private Weight weight;
