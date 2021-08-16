@@ -4,6 +4,7 @@ public class Player {
     private String name;
     private Hand hand;
     private int potValue;
+    private int wins;
 
     public Player(String name) {
         this(name, 0);
@@ -29,6 +30,14 @@ public class Player {
 
     public Hand getHand() {
         return hand;
+    }
+
+    public void wins() {
+        wins++;
+    }
+
+    public int getWins() {
+        return wins;
     }
 
     public void newHand() {

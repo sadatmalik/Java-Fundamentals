@@ -81,12 +81,11 @@ public class BlackjackController {
         p1.newHand();
         p2.newHand();
         deck.newDeck();
+        deck.populateCards();
 
-        System.out.println("\n----New Game----");
+        System.out.println("\n----New Game---- #" + deck.getNumOfNewDecks());
         System.out.println(p1.getName() + "'s pot is " + p1.getPotValue());
         System.out.println(p2.getName() + "'s pot is " + p2.getPotValue());
-
-        deck.populateCards();
 
         deck.deal(p1);
         deck.deal(p2);
@@ -110,6 +109,7 @@ public class BlackjackController {
             if (p1.getHand().getHandValue() > p2.getHand().getHandValue()) {
                 // p1 wins
                 System.out.println(p1.getName() + " wins!");
+                p1.wins();
                 settleBets(p1, p2);
 
             } else if (p1.getHand().getHandValue() == p2.getHand().getHandValue()) {
@@ -118,20 +118,27 @@ public class BlackjackController {
             } else {
                 // p2 wins
                 System.out.println(p2.getName() + " wins!");
+                p2.wins();
                 settleBets(p2, p1);
             }
         } else if (!p1.getHand().isBust() && p2.getHand().isBust()) {
             // p1 wins
             System.out.println(p1.getName() + " wins!");
+            p1.wins();
             settleBets(p1, p2);
         } else if (p1.getHand().isBust() && !p2.getHand().isBust()) {
             // p2 wins
             System.out.println(p2.getName() + " wins!");
+            p2.wins();
             settleBets(p2, p1);
         } else {
             // both lose
             System.out.println("You're both bust!");
         }
+
+        // Matches won:
+        System.out.println(p1.getName() + " has " + p1.getWins() + " wins.");
+        System.out.println(p2.getName() + " has " + p2.getWins() + " wins.");
 
     }
 

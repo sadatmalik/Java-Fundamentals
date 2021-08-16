@@ -7,6 +7,7 @@ import java.util.Random;
 public class Deck {
     private Card[] cards;
     private ArrayList<Integer> usedCards;
+    private int numOfNewDecks;
 
     public Deck() {
         cards = new Card[52];
@@ -18,7 +19,14 @@ public class Deck {
         usedCards = new ArrayList<>();
     }
 
+    public int getNumOfNewDecks() {
+        return numOfNewDecks;
+    }
+
     public void populateCards() {
+
+        numOfNewDecks++;
+
         int count = 0;
         for (int suit = 0; suit < Card.getSuit().length; suit++) {
             for (int cardValue = 1; cardValue <=13 ; cardValue++) {
