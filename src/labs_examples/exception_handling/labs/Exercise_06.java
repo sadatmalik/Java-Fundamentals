@@ -14,7 +14,7 @@ class ThrowDemo {
             divide(6, 2);
 
             divide(6, 0);
-            
+
         } catch (ArithmeticException aex) {
             aex.printStackTrace();
         }
