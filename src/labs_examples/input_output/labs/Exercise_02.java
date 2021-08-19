@@ -1,5 +1,7 @@
 package labs_examples.input_output.labs;
 
+import java.io.*;
+
 /**
  * Input/Output Exercise 2: File encryption
  *
@@ -12,3 +14,43 @@ package labs_examples.input_output.labs;
  *
  */
 
+class Encryption {
+    public static void main(String[] args) {
+
+        BufferedReader reader = null;
+        PrintWriter writer = null;
+
+        try {
+            reader = new BufferedReader(new FileReader("src/labs_examples/input_output/files/char_data.txt"));
+            writer = new PrintWriter(new FileOutputStream("src/labs_examples/input_output/files/char_data3.txt"));
+            int c;
+
+            while ((c = reader.read()) != -1) {
+                if (c == 'a') {
+                    writer.write('-');
+                } else if (c == 'e') {
+                    writer.write("~");
+                } else {
+                    writer.write(c);
+                }
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException ie) {
+            ie.printStackTrace();
+        } finally {
+            try {
+
+                reader.close();
+
+            } catch (IOException ie) {
+                ie.printStackTrace();
+            }
+
+            writer.close();
+        }
+    }
+
+
+}
