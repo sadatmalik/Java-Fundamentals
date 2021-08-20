@@ -6,18 +6,21 @@ public class BufferedIO {
 
     public static void main(String[] args) {
 
-        BufferedReader reader = null;
+        BufferedInputStream in = null;
 
         try {
-            reader = new BufferedReader(new FileReader("src/labs_examples/input_output/files/char_data.txt"));
+            in = new BufferedInputStream(new ByteArrayInputStream(new byte[] {1, 2, 3, 4}));
 
-            char[] chars = new char[11];
+            byte[] bytes = new byte[2];
 
-            reader.read(chars);
+            in.read(bytes);
 
-            System.out.println(chars);
+            for (byte b : bytes) {
+                System.out.print(b + " ");
+            }
+            System.out.println();
 
-            reader.close();
+            in.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -26,18 +29,18 @@ public class BufferedIO {
         }
 
 
-        BufferedWriter writer = null;
+        BufferedOutputStream out = null;
 
         try {
-            writer = new BufferedWriter(new PrintWriter(System.out));
+            out = new BufferedOutputStream(new PrintStream(System.out));
 
-            char[] chars = {'S', 'a', 'd', 'a', 't', ' ', 'w', 'a', 's', ' ', 'h', 'e', 'r', 'e', '!'};
+            byte[] bytes = {'S', 'a', 'd', 'a', 't', ' ', 'w', 'a', 's', ' ', 'h', 'e', 'r', 'e', '!'};
 
-            for (char c : chars) {
-                writer.write(c);
+            for (byte b : bytes) {
+                out.write(b);
             }
 
-            writer.close();
+            out.close();
 
         } catch (Exception e) {
             e.printStackTrace();
