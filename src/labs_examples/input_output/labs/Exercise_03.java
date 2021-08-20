@@ -11,14 +11,14 @@ package labs_examples.input_output.labs;
  *    Part 4 below : will use DataInputStream / DataOutputStream
  *
  *    For 1) :
- *    PipedInputStream / PipedOutputStream (@TODO come back and finish this after MultiThreading section)
  *    SequenceInputStream
  *    ByteArrayInputStream / ByteArrayOutputStream
- *    ObjectInputStream / ObjectOutputStream (@TODO come back to this later)
+ *    ObjectInputStream / ObjectOutputStream
  *
  *    LineNumberInputStream -- deprecated -- use character streams as of Java 1.1
  *    StringBufferInputStream -- deprecated -- use StringReader
  *
+ *    PipedInputStream / PipedOutputStream (@TODO come back and finish this after MultiThreading section)
  *
  *
  *    2) Demonstrate the usage of at least two additional Character Streams
@@ -29,6 +29,9 @@ package labs_examples.input_output.labs;
  *    For 2)
  *    LineNumberReader
  *    CharArrayReader / CharArrayWriter
+ *    StringReader / StringWriter
+ *
+ *    PipedReader / PipedWriter (@TODO come back and finish this after MultiThreading section)
  *
  *
  *    3) Demonstrate using a buffer on one of the Byte Streams and one of the Character Streams
