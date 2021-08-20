@@ -23,8 +23,11 @@ package labs_examples.input_output.labs;
  *
  *    2) Demonstrate the usage of at least two additional Character Streams
  *    Already used:
- *    
+ *    FileReader / FileWriter
+ *    BufferedReader / BufferedWriter
  *
+ *    For 2)
+ *    LineNumberReader
  *
  *
  *    3) Demonstrate using a buffer on one of the Byte Streams and one of the Character Streams
