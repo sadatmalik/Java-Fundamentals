@@ -40,6 +40,8 @@ package labs_examples.input_output.labs;
  *
  *    4) Demonstrate the use of the DataInputStream and DataOutputStream
  *
- *    
+ *    See DataIoStreamDemo
+ *
+ *
  *
  */
