@@ -35,6 +35,11 @@ package labs_examples.input_output.labs;
  *
  *
  *    3) Demonstrate using a buffer on one of the Byte Streams and one of the Character Streams
+ *
+ *    See BufferedIO class (and ByteArrayIoStreamDemo / CharArrayRWDemo)
+ *
  *    4) Demonstrate the use of the DataInputStream and DataOutputStream
+ *
+ *    
  *
  */
