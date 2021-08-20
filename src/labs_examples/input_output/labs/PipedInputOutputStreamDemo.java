@@ -11,7 +11,7 @@ public class PipedInputOutputStreamDemo {
         PipedInputStream in = null;
         PipedOutputStream out = null;
 
-        // @TODO -- Come back and finish this off after MultiThreading section
+        // @TODO -- Come back and finish this off after MultiThreading section - in/out should be handled by separate threads
         in = new PipedInputStream();
 
 
