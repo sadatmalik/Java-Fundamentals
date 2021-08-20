@@ -28,6 +28,7 @@ package labs_examples.input_output.labs;
  *
  *    For 2)
  *    LineNumberReader
+ *    CharArrayReader / CharArrayWriter
  *
  *
  *    3) Demonstrate using a buffer on one of the Byte Streams and one of the Character Streams
