@@ -8,6 +8,22 @@ package labs_examples.generics.labs;
  */
 import java.util.ArrayList;
 
-class Demo{
+class Demo {
 
+    public static double sumArray(ArrayList<? extends Number> array) {
+
+        double d = 0;
+        for (Number number : array) {
+            d += number.doubleValue();
+        }
+        return d;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Double> doubles = new ArrayList<>();
+        doubles.add(2.3);
+        doubles.add(4.5);
+        doubles.add(3.2);
+        System.out.println(sumArray(doubles));
+    }
 }
