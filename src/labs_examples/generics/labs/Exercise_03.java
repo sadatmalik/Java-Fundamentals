@@ -17,3 +17,13 @@ import java.util.Collection;
  *      4) Write a generic method to find the largest element within the range (begin, end) of a list.
  *
  */
+
+class MoreGenerics {
+
+
+    public <T extends Number, S extends Number> double method(T t, S s) {
+        return t.doubleValue() * s.doubleValue();
+    }
+
+    
+}
