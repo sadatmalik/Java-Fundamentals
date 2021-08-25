@@ -11,12 +11,12 @@ package labs_examples.lambdas.labs;
  *          value of the same type as the parameter
  *      4) Implement the previous functional interface with a lambda expression and use it. Also demonstrate creating
  *          an anonymous inner class from this interface.
- * @TODO
+ *
  *      5) Demonstrate creating a functional interface with an abstract method that takes 2 parameters and returns a
  *          value
  *      6) Implement the previous functional interface with a lambda expression and use it. Also demonstrate creating
  *          an anonymous inner class from this interface.
- *
+ *@TODO
  *      7) Demonstrate the use of at least two built-in functional interfaces from the java.util.function package.
  *
  *
@@ -32,6 +32,11 @@ interface FuncInterface {
 @FunctionalInterface
 interface FuncInterfaceSingleParam<T> {
     public T method(T s);
+}
+
+@FunctionalInterface
+interface FuncInterfaceTwoParameters<T, S, R> {
+    public R method(T t, S s);
 }
 
 class FuncInterfaceDemo {
@@ -65,5 +70,19 @@ class FuncInterfaceDemo {
             }
         };
         anon2.method("Sadat again");
+
+        // Double parameter functional interface
+        FuncInterfaceTwoParameters<String, Integer, Boolean> lambda3 = (s, i) -> {
+          return s.length() < i;
+        };
+        System.out.println(lambda3.method("Sadat", 6));
+
+        FuncInterfaceTwoParameters<String, Integer, Boolean> anon3 = new FuncInterfaceTwoParameters<>() {
+            @Override
+            public Boolean method(String s, Integer i) {
+                return s.length() < i;
+            }
+        };
+        System.out.println(anon3.method("Sadat", 3));
     }
 }
