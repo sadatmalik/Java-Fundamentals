@@ -1,5 +1,10 @@
 package labs_examples.lambdas.labs;
 
+import java.util.Arrays;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 /**
  * Lambdas Exercise 1:
  *
@@ -16,7 +21,7 @@ package labs_examples.lambdas.labs;
  *          value
  *      6) Implement the previous functional interface with a lambda expression and use it. Also demonstrate creating
  *          an anonymous inner class from this interface.
- *@TODO
+ *
  *      7) Demonstrate the use of at least two built-in functional interfaces from the java.util.function package.
  *
  *
@@ -84,5 +89,23 @@ class FuncInterfaceDemo {
             }
         };
         System.out.println(anon3.method("Sadat", 3));
+
+
+        // java.util.function.BiFunction
+        BiFunction<Integer, Integer, Integer> multiply = (a, b) -> {
+          return a * b;
+        };
+        Function<Integer, Integer> half = (a) -> {
+            return a / 2;
+        };
+        System.out.println(multiply.andThen(half).apply(2, 5));;
+
+
+        // java.util.function.Consumer
+        Consumer<String> upper = (s) -> System.out.println(s.toUpperCase());
+        Consumer<String> asCharArray = (s) -> System.out.println(Arrays.toString(s.toCharArray()));
+
+        upper.andThen(asCharArray).accept("Sadat");
+
     }
 }
