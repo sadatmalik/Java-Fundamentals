@@ -31,9 +31,12 @@ class JavaUtilFunctionsDemo {
         // Predicate
         Predicate<String> lessThan32 = (s) -> s.length() < 32;
         System.out.println("\n" + lessThan32.test("Is this string less than 32 characters?"));
+        System.out.println(lessThan32.negate().test("Is this string less than 32 characters?"));
 
         Predicate<String> greaterThan4 = (s) -> s.length() > 4;
         System.out.println(lessThan32.and(greaterThan4).test("> 4 && < 32 ?"));
+
+
 
     }
 
