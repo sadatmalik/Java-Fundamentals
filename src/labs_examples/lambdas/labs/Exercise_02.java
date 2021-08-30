@@ -1,7 +1,10 @@
 package labs_examples.lambdas.labs;
 
+import java.util.Random;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * Lambdas Exercise 2:
@@ -15,6 +18,18 @@ class JavaUtilFunctionsDemo {
 
     public static void main(String[] args) {
 
+        // Consumer
+        Consumer<String> hello = (s) -> System.out.println("Hello," + s);
+        hello.accept("Sadat");
+
+        Consumer<String> greeting = (s) -> System.out.println("Welcome to " + s + "'s mansion!");
+        hello.andThen(greeting).accept("John");
+
+        // Supplier
+        Supplier<Long> random = () -> Long.valueOf(new Random().nextLong());
+        long l = random.get();
+        System.out.println("\nGet from Supplier<Long> : " + l);
+
         // Function
         Function<String, Integer> funcStringToInt = (s) -> Integer.parseInt(s);
         Function<Integer, Integer> funcTimesTwo = (i) -> i * 2;
@@ -22,7 +37,7 @@ class JavaUtilFunctionsDemo {
         Function<String, String> funcToUpperCase = (s) -> s.toUpperCase();
 
         int a = funcTimesTwo.compose(funcStringToInt).apply("1");
-        System.out.println(a);
+        System.out.println("\n" + a);
 
         String x = funcIntToString.andThen(funcToUpperCase).apply(4);
         System.out.println(x);
