@@ -1,10 +1,7 @@
 package labs_examples.lambdas.labs;
 
 import java.util.Random;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * Lambdas Exercise 2:
@@ -51,7 +48,15 @@ class JavaUtilFunctionsDemo {
         Predicate<String> greaterThan4 = (s) -> s.length() > 4;
         System.out.println(lessThan32.and(greaterThan4).test("> 4 && < 32 ?"));
 
+        // Unary Operator (extends Function)
+        UnaryOperator<String> helloName = (s) -> "Hello, " + s;
+        String s2 = helloName.apply("Sadat");
+        System.out.println("\n" + s2);
 
+        // Binary Operator (extends BiFunction)
+        BinaryOperator<String> concat = (s, t) -> s + " " + t;
+        String s3 = concat.apply("Hello", "again!");
+        System.out.println(s3);
 
     }
 
