@@ -22,10 +22,22 @@ class JavaUtilFunctionsDemo {
         Consumer<String> greeting = (s) -> System.out.println("Welcome to " + s + "'s mansion!");
         hello.andThen(greeting).accept("John");
 
+        // BiConsumer
+        BiConsumer<String, Integer> printNum = (s, i) -> {
+            for (int x = 0; x < i; x++) {
+                System.out.println(s);
+            }
+        };
+        printNum.accept("Hi", 3);
+
         // Supplier
         Supplier<Long> random = () -> Long.valueOf(new Random().nextLong());
         long l = random.get();
         System.out.println("\nGet from Supplier<Long> : " + l);
+
+        // BooleanSupplier
+        BooleanSupplier truth = () -> true;
+        System.out.println("\nBooleanSupplier.getAsBoolean() returns : " + truth.getAsBoolean());
 
         // Function
         Function<String, Integer> funcStringToInt = (s) -> Integer.parseInt(s);
@@ -39,6 +51,17 @@ class JavaUtilFunctionsDemo {
         String x = funcIntToString.andThen(funcToUpperCase).apply(4);
         System.out.println(x);
 
+        // BiFunction
+        BiFunction<String, Integer, String> biFunc = (s, i) -> {
+            String ret = "";
+            for (int y = 0; y < i; y++) {
+                ret += s + " ";
+            }
+            return ret;
+        };
+        String biFuncReturn = biFunc.apply("Hello", 3);
+        System.out.println("\n" + biFuncReturn);
+
 
         // Predicate
         Predicate<String> lessThan32 = (s) -> s.length() < 32;
@@ -47,6 +70,10 @@ class JavaUtilFunctionsDemo {
 
         Predicate<String> greaterThan4 = (s) -> s.length() > 4;
         System.out.println(lessThan32.and(greaterThan4).test("> 4 && < 32 ?"));
+
+        // BiPredicate
+        BiPredicate<Integer, Integer> equals = (i1, i2) -> i1 == i2;
+        System.out.println("\n2 == 2 ? " + equals.test(2, 2));
 
         // Unary Operator (extends Function)
         UnaryOperator<String> helloName = (s) -> "Hello, " + s;
