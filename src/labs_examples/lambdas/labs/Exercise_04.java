@@ -74,8 +74,15 @@ class Example {
         Stream<String> lines = Files.lines(Paths.get(dataFile));
         lines.forEach(System.out::println);
 
-//        7) Demonstrate how to Stream the stream_text_lab.csv file in this package. Split the lines into String arrays,
-//           the print out the element at the 1 index for each array.
+        // 7) Demonstrate how to Stream the stream_text_lab.csv file in this package. Split the lines into String arrays,
+        // the print out the element at the 1 index for each array.
+        System.out.println("\n---------- Example 7 ------------");
+        String csvFile = "src/labs_examples/lambdas/labs/stream_text_lab.csv";
+        Stream<String> csvLines = Files.lines(Paths.get(csvFile));
+        csvLines
+                .map((s) -> s.split(","))
+                .forEach((x) -> System.out.println(x[1]));
+
 //        8) Demonstrate how to Stream the stream_text_lab.csv file in this package. Split the lines into String arrays,
 //           the print out the sum of all elements at index 2.
 //        9) Demonstrate the anyMatch() function.
