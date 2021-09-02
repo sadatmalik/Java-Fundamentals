@@ -83,8 +83,16 @@ class Example {
                 .map((s) -> s.split(","))
                 .forEach((x) -> System.out.println(x[1]));
 
-//        8) Demonstrate how to Stream the stream_text_lab.csv file in this package. Split the lines into String arrays,
-//           the print out the sum of all elements at index 2.
+        // 8) Demonstrate how to Stream the stream_text_lab.csv file in this package. Split the lines into String arrays,
+        // the print out the sum of all elements at index 2.
+        System.out.println("\n---------- Example 8 ------------");
+        csvLines = Files.lines(Paths.get(csvFile));
+        double summation = csvLines
+                .map((s) -> s.split(","))
+                .mapToDouble((x) -> Double.parseDouble(x[2]))
+                .sum();
+        System.out.println(summation);
+
 //        9) Demonstrate the anyMatch() function.
 //        10) Demonstrate the allMatch() function.
 //        11) Demonstrate the collect() terminal operation to store resulting values into a List
