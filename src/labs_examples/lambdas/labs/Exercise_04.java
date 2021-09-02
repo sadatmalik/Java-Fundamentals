@@ -1,5 +1,6 @@
 package labs_examples.lambdas.labs;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -34,7 +35,7 @@ import java.util.stream.Stream;
  */
 
 class Example {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         // 1) Demonstrate the use of the range function to print out the numbers 1 through 15 (inclusive)
         System.out.println("\n---------- Example 1 ------------");
@@ -67,7 +68,12 @@ class Example {
         int sum = ints.stream().reduce(0, (a, b) -> a + b);
         System.out.println(sum);
 
-//        6) Demontsrate how to Stream a text file and print out each line
+        // 6) Demontsrate how to Stream a text file and print out each line
+        System.out.println("\n---------- Example 6 ------------");
+        String dataFile = "src/labs_examples/lambdas/examples/stream_api/example_files/data.txt";
+        Stream<String> lines = Files.lines(Paths.get(dataFile));
+        lines.forEach(System.out::println);
+
 //        7) Demonstrate how to Stream the stream_text_lab.csv file in this package. Split the lines into String arrays,
 //           the print out the element at the 1 index for each array.
 //        8) Demonstrate how to Stream the stream_text_lab.csv file in this package. Split the lines into String arrays,
