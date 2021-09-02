@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -93,11 +94,28 @@ class Example {
                 .sum();
         System.out.println(summation);
 
-//        9) Demonstrate the anyMatch() function.
-//        10) Demonstrate the allMatch() function.
-//        11) Demonstrate the collect() terminal operation to store resulting values into a List
+        // 9) Demonstrate the anyMatch() function.
+        System.out.println("\n---------- Example 9 ------------");
+        boolean anyMatch = Stream
+                .of("One", "Two", "Three")
+                .anyMatch((x) -> x.equals("Two"));
+        System.out.println(anyMatch);
+
+        // 10) Demonstrate the allMatch() function.
+        System.out.println("\n---------- Example 10 ------------");
+        boolean allMatch = Stream
+                .of("One", "Two", "Three")
+                .allMatch((s) -> s.length() > 2);
+        System.out.println(allMatch);
 
 
+        // 11) Demonstrate the collect() terminal operation to store resulting values into a List
+        System.out.println("\n---------- Example 11 ------------");
+        List<String> collection = Stream
+                .of("One", "Two", "Three")
+                .filter((s) -> s.length() == 3)
+                .collect(Collectors.toList());
+        collection.forEach(System.out::println);
     }
     
 }
