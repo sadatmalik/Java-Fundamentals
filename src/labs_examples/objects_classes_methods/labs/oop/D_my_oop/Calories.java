@@ -7,7 +7,9 @@ package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 public class Calories {
 
     private Weight weight;
-    private int[] maintenance;
+    private int maintenanceUpperThreshold;
+    private int maintenanceLowerThreshold;
+    private int maintenanceMifflinValue;
 
     private boolean mifflinMode;
 
@@ -16,32 +18,60 @@ public class Calories {
 
     public Calories(Weight weight) {
         this.weight = weight;
-        maintenance = null;
+        maintenanceUpperThreshold = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 17); // upper limit
+        maintenanceLowerThreshold = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 13); // lower limit
+        maintenanceMifflinValue = MIFFLIN_ST_JOUR_MAINTENANCE; // hard-coded value for now, will eventually use MSJ calculation
         mifflinMode = false;
     }
 
-    public int[] getMaintenance() {
-        if (maintenance == null) {
-            maintenance = new int[2];
-            maintenance[0] = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 13); // lower limit
-            maintenance[1] = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 17); // upper limit
-        }
-        return maintenance;
+    public int getMaintenanceUpperThreshold() {
+        return maintenanceUpperThreshold;
+    }
+
+    public int getMaintenanceLowerThreshold() {
+        return maintenanceLowerThreshold;
+    }
+
+    public int getMaintenanceMifflinValue() {
+        return maintenanceMifflinValue;
     }
 
     public int getWeightLossCalories(boolean useMifflinMethod) {
         if (useMifflinMethod) {
             return (int) (MIFFLIN_ST_JOUR_MAINTENANCE * 0.8);
         } else {
-            return (int) (getMaintenance()[0] * 0.8);
+            return (int) (getMaintenanceLowerThreshold() * 0.8);
         }
     }
 
-    public int getWeightGainCalories(int numTrainingDays) {
+    public int getWeightGainCalories(boolean trainingDay, int numTrainingDays, Maintenance calculationMode) {
 
-        int gainCalories = MIFFLIN_ST_JOUR_MAINTENANCE + (GROUP_D_WEEKLY_SURPLUS / numTrainingDays);
+        int calories = 0;
 
-        return gainCalories;
+        switch(calculationMode) {
+            case UPPER:
+                if (trainingDay) {
+                    calories = maintenanceUpperThreshold + (GROUP_D_WEEKLY_SURPLUS / numTrainingDays);
+                } else {
+                    calories = maintenanceUpperThreshold;
+                }
+
+            case LOWER:
+                if (trainingDay) {
+                    calories = maintenanceLowerThreshold + (GROUP_D_WEEKLY_SURPLUS / numTrainingDays);
+                } else {
+                    calories = maintenanceLowerThreshold;
+                }
+
+            case MIFFLIN:
+                if (trainingDay) {
+                    calories = maintenanceMifflinValue + (GROUP_D_WEEKLY_SURPLUS / numTrainingDays);
+                } else {
+                    calories = maintenanceMifflinValue;
+                }
+        }
+
+        return calories;
     }
 
     public Weight getWeight() {

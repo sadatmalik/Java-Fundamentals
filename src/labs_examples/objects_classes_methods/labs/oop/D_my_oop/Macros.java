@@ -1,5 +1,6 @@
 package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
+// This is all defaulting to Mifflin calc at the moment
 public class Macros {
 
     private int protein;
@@ -44,10 +45,11 @@ public class Macros {
             carbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
 
         } else if (gainCycle && trainingDay) {
-            caloriesFromFat = (int) (cal.getWeightGainCalories(4) * TRAINING_DAY_FAT_PERCENTAGE);
+            int caloriesRequired = cal.getWeightGainCalories(true, 4, Maintenance.MIFFLIN);
+            caloriesFromFat = (int) (caloriesRequired * TRAINING_DAY_FAT_PERCENTAGE);
             fat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
 
-            int remainingCalories = cal.getWeightGainCalories(4) - caloriesFromProtein - caloriesFromFat;
+            int remainingCalories = caloriesRequired - caloriesFromProtein - caloriesFromFat;
             carbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
 
         }

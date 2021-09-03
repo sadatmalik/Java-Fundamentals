@@ -20,15 +20,21 @@ public class Controller {
         double upper = weight.getUpperThreshold();
         double lower = weight.getLowerThreshold();
 
-        System.out.println("Average current weight = " + average);
-        System.out.println("Upper target limit for next week = " + upper);
-        System.out.println("Lower target limit for next week = " + lower);
+        System.out.println("\n---------------Weight average and next week's target range---------------");
+
+        System.out.printf("Average current weight = %.2f \n", average);
+        System.out.printf("Upper target limit for next week = %.2f \n", upper);
+        System.out.printf("Lower target limit for next week = %.2f \n", lower);
 
         // Get maintenance calories
         Calories cal = new Calories(weight);
-        System.out.println("Maintenance calories = " + cal.getMaintenance()[0] + " / " + cal.getMaintenance()[1]);
+        System.out.println("\n---------------Maintenance calorie levels---------------");
+        System.out.println("Upper Threshold (weight in pounds * 17) = " + cal.getMaintenanceUpperThreshold());
+        System.out.println("Lower Threshold (weight in pounds * 13) = " + cal.getMaintenanceLowerThreshold());
+        System.out.println("Using Mifflin-St Jeor calculation  = " + cal.getMaintenanceMifflinValue());
 
         // Set ideal and current body fat percentages
+        System.out.println("\n---------------Body Fat and Ideal Weight---------------");
         BodyFat fat = new BodyFat(10d, 20d);
         weight.setBodyFat(fat);
 
@@ -36,10 +42,18 @@ public class Controller {
         System.out.println("Ideal weight = " + weight.getIdealWeightInKg());
 
         // Get weight gain calories for 3 and 4 training days per week:
-        System.out.println("Training day calories for 3 workout days per week = " + cal.getWeightGainCalories(3));
-        System.out.println("Training day calories for 4 workout days per week = " + cal.getWeightGainCalories(4));
-        System.out.println("Non training day calories = " + cal.MIFFLIN_ST_JOUR_MAINTENANCE);
+        System.out.println("\n---------------Target Calories for Muscle Gain cycle---------------");
 
+        System.out.println("Training day calories for 4 workout days per week = "
+                + cal.getWeightGainCalories(true,4, Maintenance.MIFFLIN));
+
+        System.out.println("Training day calories for 3 workout days per week = "
+                + cal.getWeightGainCalories(true,3, Maintenance.MIFFLIN));
+
+        System.out.println("Calories for rest day = " + cal.getMaintenanceMifflinValue());
+
+
+        System.out.println("\n@TODO pick up from here ---------------Target Calories for Weight Loss cycle---------------");
         // Weight loss cycle macros
         Macros macros = new Macros(cal, false, false);
         System.out.println("Weight loss cycle daily protein = " + macros.getProtein() + "g");

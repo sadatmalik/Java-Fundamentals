@@ -22,6 +22,7 @@ Todo:
 Mifflin calculation mode selector
 Mifflin formula calculations
 Set gain/loss mode flag
+Calculate Macros using Mifflin or Upper/Lower thresholds
 Manual override for maintenance calorie levels
 Add a DB/persistence layer for historical data
 Add charting function for historical data
