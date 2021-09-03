@@ -16,7 +16,7 @@ public class Controller {
         }
 
         // Get average for week and next week's target range
-        double average = weight.getAverage();
+        double average = weight.getWeekAverage();
         double upper = weight.getUpperThreshold();
         double lower = weight.getLowerThreshold();
 

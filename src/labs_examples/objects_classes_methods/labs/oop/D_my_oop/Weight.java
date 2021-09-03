@@ -34,7 +34,7 @@ public class Weight {
         return week;
     }
 
-    public double getAverage() {
+    public double getWeekAverage() {
         if (average == 0) {
             double sum = 0;
             for (double d : week) {

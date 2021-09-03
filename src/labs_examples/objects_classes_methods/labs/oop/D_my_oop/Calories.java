@@ -23,8 +23,8 @@ public class Calories {
     public int[] getMaintenance() {
         if (maintenance == null) {
             maintenance = new int[2];
-            maintenance[0] = (int) (weight.getAverage() * Weight.POUNDS_PER_KILO * 13); // lower limit
-            maintenance[1] = (int) (weight.getAverage() * Weight.POUNDS_PER_KILO * 17); // upper limit
+            maintenance[0] = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 13); // lower limit
+            maintenance[1] = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 17); // upper limit
         }
         return maintenance;
     }
