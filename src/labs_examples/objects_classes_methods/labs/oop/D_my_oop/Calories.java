@@ -9,12 +9,15 @@ public class Calories {
     private Weight weight;
     private int[] maintenance;
 
+    private boolean mifflinMode;
+
     public final int MIFFLIN_ST_JOUR_MAINTENANCE = 2000;
     public final int GROUP_D_WEEKLY_SURPLUS = 1050;
 
     public Calories(Weight weight) {
         this.weight = weight;
         maintenance = null;
+        mifflinMode = false;
     }
 
     public int[] getMaintenance() {
@@ -43,5 +46,13 @@ public class Calories {
 
     public Weight getWeight() {
         return weight;
+    }
+
+    public void setMifflinMode(boolean mifflinMode) {
+        this.mifflinMode = mifflinMode;
+    }
+
+    public boolean isMifflinMode() {
+        return mifflinMode;
     }
 }

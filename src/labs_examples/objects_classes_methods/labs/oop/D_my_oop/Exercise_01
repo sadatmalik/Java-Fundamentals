@@ -19,7 +19,8 @@ Gain/loss cycle calories
 Intake macros for gain/loss cycle
 
 Todo:
-Mifflin formula and a Mifflin calculation mode selector
+Mifflin calculation mode selector
+Mifflin formula calculations
 Manual override for maintenance calorie levels
 Add a DB/persistence layer for historical data
 Add charting function for historical data
