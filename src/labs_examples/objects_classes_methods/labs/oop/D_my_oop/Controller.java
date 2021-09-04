@@ -37,40 +37,42 @@ public class Controller {
         System.out.println("\n---------------Body Fat and Ideal Weight---------------");
         BodyFat fat = new BodyFat(10d, 20d);
         weight.setBodyFat(fat);
+        System.out.println("Starting body fat = " + fat.getCurrentBodyFat()
+                + ", Starting weight = " + weight.startingWeight);
 
         // Get ideal weight
-        System.out.println("Ideal weight = " + weight.getIdealWeightInKg());
+        System.out.println("Ideal body fat = " + fat.getIdealBodyFat()
+                        + ", Ideal weight = " + weight.getIdealWeightInKg());
 
         // Get weight gain calories for 3 and 4 training days per week:
-        System.out.println("\n---------------Target Calories for Muscle Gain cycle---------------");
-
-        System.out.println("Training day calories for 4 workout days per week = "
-                + cal.getWeightGainCalories(true,4, Maintenance.MIFFLIN));
-
-        System.out.println("Training day calories for 3 workout days per week = "
-                + cal.getWeightGainCalories(true,3, Maintenance.MIFFLIN));
-
-        System.out.println("Calories for rest day = " + cal.getMaintenanceMifflinValue());
+        System.out.println("\n---------------Target Calories / Macros for Muscle Gain cycle---------------");
+        printCaloriesAndMacros(cal, Split.FOUR_DAY);
+        printCaloriesAndMacros(cal, Split.THREE_DAY);
 
 
-        System.out.println("\n@TODO pick up from here ---------------Target Calories for Weight Loss cycle---------------");
         // Weight loss cycle macros
-        Macros macros = new Macros(cal, false, false);
-        System.out.println("Weight loss cycle daily protein = " + macros.getProtein() + "g");
-        System.out.println("Weight loss cycle daily fat = " + macros.getFat() + "g");
-        System.out.println("Weight loss cycle daily carbs = " + macros.getCarbs() + "g");
+        // System.out.println("Weight loss cycle daily protein = " + macros.getProtein() + "g");
+        // System.out.println("Weight loss cycle daily fat = " + macros.getFat() + "g");
+        // System.out.println("Weight loss cycle daily carbs = " + macros.getCarbs() + "g");
 
-        // Weight gain cycle
-        macros = new Macros(cal, true, false);
-        System.out.println("Weight gain cycle rest day protein = " + macros.getProtein() + "g");
-        System.out.println("Weight gain cycle rest day fat = " + macros.getFat() + "g");
-        System.out.println("Weight gain cycle rest day carbs = " + macros.getCarbs() + "g");
+    }
 
-        macros = new Macros(cal, true, true);
-        System.out.println("Weight gain cycle training day protein = " + macros.getProtein() + "g");
-        System.out.println("Weight gain cycle training day fat = " + macros.getFat() + "g");
-        System.out.println("Weight gain cycle training day carbs = " + macros.getCarbs() + "g");
+    private static void printCaloriesAndMacros(Calories cal, Split split) {
+        System.out.println("\n" + split.getNumTrainingDays() + " day training split:");
 
+        // Weight gain macros
+        Macros macros = new Macros(cal, true, split);
+        int trainingDayCalories = cal.getWeightGainCalories(true, split.getNumTrainingDays(), Maintenance.MIFFLIN);
+
+        System.out.println("\nTraining day calories = " + trainingDayCalories);
+        System.out.println("Training day protein = " + macros.getProtein() + "g");
+        System.out.println("Training day fat = " + macros.getTrainingDayFat() + "g");
+        System.out.println("Training day carbs = " + macros.getTrainingDayCarbs() + "g");
+
+        System.out.println("\nRest day calories = " + cal.getMaintenanceMifflinValue());
+        System.out.println("Rest day protein = " + macros.getProtein() + "g");
+        System.out.println("Rest day fat = " + macros.getRestDayFat() + "g");
+        System.out.println("Rest day carbs = " + macros.getRestDayCarbs() + "g");
 
     }
 
