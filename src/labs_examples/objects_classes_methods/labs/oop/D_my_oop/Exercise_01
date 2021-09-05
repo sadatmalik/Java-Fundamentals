@@ -17,9 +17,9 @@ Maintenance calorie calculations
 Ideal body weight calculation
 Gain/loss cycle calories
 Intake macros for gain/loss cycle
+Mifflin calculation mode selector for Calorie and Macro calculations
 
 Todo:
-Mifflin calculation mode selector
 Mifflin formula calculations
 Set gain/loss mode flag
 Calculate Macros using Mifflin or Upper/Lower thresholds
