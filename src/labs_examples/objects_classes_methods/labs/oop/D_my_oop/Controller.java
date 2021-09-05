@@ -44,24 +44,31 @@ public class Controller {
         System.out.println("Ideal body fat = " + fat.getIdealBodyFat()
                         + ", Ideal weight = " + weight.getIdealWeightInKg());
 
-        // Get weight gain calories for 3 and 4 training days per week:
+        // Get weight gain cycle calories and macros for 3 and 4 training days per week:
         System.out.println("\n---------------Target Calories / Macros for Muscle Gain cycle---------------");
-        printCaloriesAndMacros(cal, Split.FOUR_DAY);
-        printCaloriesAndMacros(cal, Split.THREE_DAY);
+        printGainCycleCaloriesAndMacros(cal, Split.FOUR_DAY);
+        printGainCycleCaloriesAndMacros(cal, Split.THREE_DAY);
 
+        // Get weight loss cycle calories and macros:
+        System.out.println("\n---------------Target Calories / Macros for Fat Loss cycle---------------");
+        printLossCycleCaloriesAndMacros(cal, Maintenance.LOWER);
+    }
 
-        // Weight loss cycle macros
-        // System.out.println("Weight loss cycle daily protein = " + macros.getProtein() + "g");
-        // System.out.println("Weight loss cycle daily fat = " + macros.getFat() + "g");
-        // System.out.println("Weight loss cycle daily carbs = " + macros.getCarbs() + "g");
+    private static void printLossCycleCaloriesAndMacros(Calories cal, Maintenance mode) {
+        Macros macros = new Macros(cal, mode, false, null);
+
+        System.out.println("\nDaily calories = " + cal.getWeightLossCalories(mode));
+        System.out.println("Daily protein = " + macros.getProtein() + "g");
+        System.out.println("Daily fat = " + macros.getRestDayFat() + "g");
+        System.out.println("Daily carbs = " + macros.getRestDayCarbs() + "g");
 
     }
 
-    private static void printCaloriesAndMacros(Calories cal, Split split) {
+    private static void printGainCycleCaloriesAndMacros(Calories cal, Split split) {
         System.out.println("\n" + split.getNumTrainingDays() + " day training split:");
 
         // Weight gain macros
-        Macros macros = new Macros(cal, true, split);
+        Macros macros = new Macros(cal, Maintenance.MIFFLIN, true, split);
         int trainingDayCalories = cal.getWeightGainCalories(true, split.getNumTrainingDays(), Maintenance.MIFFLIN);
 
         System.out.println("\nTraining day calories = " + trainingDayCalories);

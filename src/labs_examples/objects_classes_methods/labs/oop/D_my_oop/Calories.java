@@ -11,8 +11,6 @@ public class Calories {
     private int maintenanceLowerThreshold;
     private int maintenanceMifflinValue;
 
-    private boolean mifflinMode;
-
     public final int MIFFLIN_ST_JOUR_MAINTENANCE = 2000;
     public final int GROUP_D_WEEKLY_SURPLUS = 1050;
 
@@ -20,8 +18,8 @@ public class Calories {
         this.weight = weight;
         maintenanceUpperThreshold = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 17); // upper limit
         maintenanceLowerThreshold = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 13); // lower limit
-        maintenanceMifflinValue = MIFFLIN_ST_JOUR_MAINTENANCE; // hard-coded value for now, will eventually use MSJ calculation
-        mifflinMode = false;
+        // @todo hard-coded value for now, will eventually use MSJ calculation:
+        maintenanceMifflinValue = MIFFLIN_ST_JOUR_MAINTENANCE; 
     }
 
     public int getMaintenanceUpperThreshold() {
@@ -36,25 +34,31 @@ public class Calories {
         return maintenanceMifflinValue;
     }
 
-    public int getWeightLossCalories(boolean useMifflinMethod) {
-        if (useMifflinMethod) {
-            return (int) (MIFFLIN_ST_JOUR_MAINTENANCE * 0.8);
-        } else {
-            return (int) (getMaintenanceLowerThreshold() * 0.8);
+    public int getWeightLossCalories(Maintenance mode) {
+
+        switch (mode) {
+            case MIFFLIN:
+                return (int) (getMaintenanceMifflinValue() * 0.8);
+
+            default:
+                return (int) (getMaintenanceLowerThreshold() * 0.8);
         }
+
     }
 
-    public int getWeightGainCalories(boolean trainingDay, int numTrainingDays, Maintenance calculationMode) {
+    // @TODO modify arguments to take split instead of int for numTrainingDays
+    public int getWeightGainCalories(boolean trainingDay, int numTrainingDays, Maintenance mode) {
 
         int calories = 0;
 
-        switch(calculationMode) {
+        switch(mode) {
             case UPPER:
                 if (trainingDay) {
                     calories = maintenanceUpperThreshold + (GROUP_D_WEEKLY_SURPLUS / numTrainingDays);
                 } else {
                     calories = maintenanceUpperThreshold;
                 }
+                break;
 
             case LOWER:
                 if (trainingDay) {
@@ -62,6 +66,7 @@ public class Calories {
                 } else {
                     calories = maintenanceLowerThreshold;
                 }
+                break;
 
             case MIFFLIN:
                 if (trainingDay) {
@@ -69,6 +74,7 @@ public class Calories {
                 } else {
                     calories = maintenanceMifflinValue;
                 }
+                break;
         }
 
         return calories;
@@ -78,11 +84,4 @@ public class Calories {
         return weight;
     }
 
-    public void setMifflinMode(boolean mifflinMode) {
-        this.mifflinMode = mifflinMode;
-    }
-
-    public boolean isMifflinMode() {
-        return mifflinMode;
-    }
 }

@@ -21,7 +21,7 @@ public class Macros {
     private final Split trainingSplit;
     
 
-    public Macros(Calories cal, boolean gainCycle, Split trainingSplit) {
+    public Macros(Calories cal, Maintenance mode, boolean gainCycle, Split trainingSplit) {
         this.cal = cal;
         this.gainCycle = gainCycle;
         this.trainingSplit = trainingSplit;
@@ -30,38 +30,58 @@ public class Macros {
         double idealWeightInPounds = cal.getWeight().getIdealWeightInPounds();
         protein = (int) (idealWeightInPounds * PROTEIN_GRAMS_PER_POUND_BODY_WEIGHT);
 
+        // calculate loss/gain cycle fat and carbs
+        if (!gainCycle) {
+            int caloriesFromProtein = protein * CALORIES_PER_GRAM_OF_PROTEIN;
+            int caloriesFromFat;
+
+            caloriesFromFat = (int) (cal.getWeightLossCalories(mode) * PERCENTAGE_CALORIES_FROM_FAT);
+            this.restDayFat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
+            this.trainingDayFat = this.restDayFat;
+
+            int remainingCalories = cal.getWeightLossCalories(mode) - caloriesFromProtein - caloriesFromFat;
+            this.restDayCarbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
+            this.trainingDayCarbs = this.restDayCarbs;
+
+        } else {
+
+            setFatAndCarbs(mode);
+        }
     }
 
-    private void setFatAndCarbs() {
+    private void setFatAndCarbs(Maintenance mode) {
+        // maintenance calories
+        int maintenanceCalories;
+
         // fat & carbs
         int caloriesFromProtein = protein * CALORIES_PER_GRAM_OF_PROTEIN;
         int caloriesFromFat;
 
-        if (!gainCycle) {
-            // @TODO
-//            caloriesFromFat = (int) (cal.getWeightLossCalories(false) * PERCENTAGE_CALORIES_FROM_FAT);
-//            fat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
-//
-//            int remainingCalories = cal.getWeightLossCalories(false) - caloriesFromProtein - caloriesFromFat;
-//            carbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
-
-        } else if (gainCycle) {
-            // Rest Day
-            caloriesFromFat = (int) (cal.getMaintenanceMifflinValue() * trainingSplit.getRestDayFat());
-            restDayFat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
-
-            int remainingCalories = cal.getMaintenanceMifflinValue() - caloriesFromProtein - caloriesFromFat;
-            restDayCarbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
-
-            // Training Day
-            int caloriesRequired = cal.getWeightGainCalories(true, trainingSplit.numTrainingDays, Maintenance.MIFFLIN);
-            caloriesFromFat = (int) (caloriesRequired * trainingSplit.getTrainingDayFat());
-            trainingDayFat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
-
-            remainingCalories = caloriesRequired - caloriesFromProtein - caloriesFromFat;
-            trainingDayCarbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
-
+        // Rest Day
+        if (mode == Maintenance.MIFFLIN) {
+            maintenanceCalories = cal.getMaintenanceMifflinValue();
+        } else {
+            maintenanceCalories = cal.getMaintenanceLowerThreshold();
         }
+        caloriesFromFat = (int) (maintenanceCalories * trainingSplit.getRestDayFat());
+        restDayFat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
+
+        int remainingCalories = maintenanceCalories - caloriesFromProtein - caloriesFromFat;
+        restDayCarbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
+
+        // Training Day
+        int caloriesRequired;
+
+        if (mode == Maintenance.MIFFLIN) {
+            caloriesRequired = cal.getWeightGainCalories(true, trainingSplit.numTrainingDays, Maintenance.MIFFLIN);
+        } else {
+            caloriesRequired = cal.getWeightGainCalories(true, trainingSplit.numTrainingDays, Maintenance.LOWER);
+        }
+        caloriesFromFat = (int) (caloriesRequired * trainingSplit.getTrainingDayFat());
+        trainingDayFat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
+
+        remainingCalories = caloriesRequired - caloriesFromProtein - caloriesFromFat;
+        trainingDayCarbs = remainingCalories / CALORIES_FROM_GRAM_OF_CARBS;
 
     }
 
@@ -70,32 +90,19 @@ public class Macros {
     }
 
     public int getTrainingDayCarbs() {
-        if (trainingDayCarbs == 0) {
-            setFatAndCarbs();
-        }
         return trainingDayCarbs;
     }
 
     public int getTrainingDayFat() {
-        if (trainingDayFat == 0) {
-            setFatAndCarbs();
-        }
         return trainingDayFat;
     }
 
     public int getRestDayCarbs() {
-        if (restDayCarbs == 0) {
-            setFatAndCarbs();
-        }
         return restDayCarbs;
     }
 
     public int getRestDayFat() {
-        if (restDayFat == 0) {
-            setFatAndCarbs();
-        }
         return restDayFat;
     }
-
 
 }
