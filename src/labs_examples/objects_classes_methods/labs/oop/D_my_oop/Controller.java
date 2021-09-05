@@ -69,7 +69,7 @@ public class Controller {
 
         // Weight gain macros
         Macros macros = new Macros(cal, Maintenance.MIFFLIN, true, split);
-        int trainingDayCalories = cal.getWeightGainCalories(true, split.getNumTrainingDays(), Maintenance.MIFFLIN);
+        int trainingDayCalories = cal.getWeightGainCalories(true, split, Maintenance.MIFFLIN);
 
         System.out.println("\nTraining day calories = " + trainingDayCalories);
         System.out.println("Training day protein = " + macros.getProtein() + "g");

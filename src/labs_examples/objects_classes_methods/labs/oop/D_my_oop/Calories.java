@@ -19,7 +19,7 @@ public class Calories {
         maintenanceUpperThreshold = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 17); // upper limit
         maintenanceLowerThreshold = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 13); // lower limit
         // @todo hard-coded value for now, will eventually use MSJ calculation:
-        maintenanceMifflinValue = MIFFLIN_ST_JOUR_MAINTENANCE; 
+        maintenanceMifflinValue = MIFFLIN_ST_JOUR_MAINTENANCE;
     }
 
     public int getMaintenanceUpperThreshold() {
@@ -46,15 +46,14 @@ public class Calories {
 
     }
 
-    // @TODO modify arguments to take split instead of int for numTrainingDays
-    public int getWeightGainCalories(boolean trainingDay, int numTrainingDays, Maintenance mode) {
+    public int getWeightGainCalories(boolean trainingDay, Split split, Maintenance mode) {
 
         int calories = 0;
 
         switch(mode) {
             case UPPER:
                 if (trainingDay) {
-                    calories = maintenanceUpperThreshold + (GROUP_D_WEEKLY_SURPLUS / numTrainingDays);
+                    calories = maintenanceUpperThreshold + (GROUP_D_WEEKLY_SURPLUS / split.getNumTrainingDays());
                 } else {
                     calories = maintenanceUpperThreshold;
                 }
@@ -62,7 +61,7 @@ public class Calories {
 
             case LOWER:
                 if (trainingDay) {
-                    calories = maintenanceLowerThreshold + (GROUP_D_WEEKLY_SURPLUS / numTrainingDays);
+                    calories = maintenanceLowerThreshold + (GROUP_D_WEEKLY_SURPLUS / split.getNumTrainingDays());
                 } else {
                     calories = maintenanceLowerThreshold;
                 }
@@ -70,7 +69,7 @@ public class Calories {
 
             case MIFFLIN:
                 if (trainingDay) {
-                    calories = maintenanceMifflinValue + (GROUP_D_WEEKLY_SURPLUS / numTrainingDays);
+                    calories = maintenanceMifflinValue + (GROUP_D_WEEKLY_SURPLUS / split.getNumTrainingDays());
                 } else {
                     calories = maintenanceMifflinValue;
                 }

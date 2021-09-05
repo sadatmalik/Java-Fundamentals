@@ -18,13 +18,12 @@ public class Macros {
     private final static int CALORIES_FROM_GRAM_OF_CARBS = 4;
     private final static double PERCENTAGE_CALORIES_FROM_FAT = 0.25;
 
-    private final Split trainingSplit;
-    
+    private final Split split;
 
-    public Macros(Calories cal, Maintenance mode, boolean gainCycle, Split trainingSplit) {
+    public Macros(Calories cal, Maintenance mode, boolean gainCycle, Split split) {
         this.cal = cal;
         this.gainCycle = gainCycle;
-        this.trainingSplit = trainingSplit;
+        this.split = split;
 
         // protein
         double idealWeightInPounds = cal.getWeight().getIdealWeightInPounds();
@@ -63,7 +62,7 @@ public class Macros {
         } else {
             maintenanceCalories = cal.getMaintenanceLowerThreshold();
         }
-        caloriesFromFat = (int) (maintenanceCalories * trainingSplit.getRestDayFat());
+        caloriesFromFat = (int) (maintenanceCalories * split.getRestDayFat());
         restDayFat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
 
         int remainingCalories = maintenanceCalories - caloriesFromProtein - caloriesFromFat;
@@ -73,11 +72,11 @@ public class Macros {
         int caloriesRequired;
 
         if (mode == Maintenance.MIFFLIN) {
-            caloriesRequired = cal.getWeightGainCalories(true, trainingSplit.numTrainingDays, Maintenance.MIFFLIN);
+            caloriesRequired = cal.getWeightGainCalories(true, split, Maintenance.MIFFLIN);
         } else {
-            caloriesRequired = cal.getWeightGainCalories(true, trainingSplit.numTrainingDays, Maintenance.LOWER);
+            caloriesRequired = cal.getWeightGainCalories(true, split, Maintenance.LOWER);
         }
-        caloriesFromFat = (int) (caloriesRequired * trainingSplit.getTrainingDayFat());
+        caloriesFromFat = (int) (caloriesRequired * split.getTrainingDayFat());
         trainingDayFat = caloriesFromFat / CALORIES_PER_GRAM_OF_FAT;
 
         remainingCalories = caloriesRequired - caloriesFromProtein - caloriesFromFat;
