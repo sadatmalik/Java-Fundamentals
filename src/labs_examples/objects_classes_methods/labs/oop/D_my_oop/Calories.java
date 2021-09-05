@@ -1,7 +1,7 @@
 package labs_examples.objects_classes_methods.labs.oop.D_my_oop;
 
 // @todo : 14/08/2021
-// Mifflin formula and a Mifflin calculation mode selector
+// Mifflin formula calculations
 // Manual override for maintenance calorie levels
 
 public class Calories {
@@ -18,8 +18,12 @@ public class Calories {
         this.weight = weight;
         maintenanceUpperThreshold = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 17); // upper limit
         maintenanceLowerThreshold = (int) (weight.getWeekAverage() * Weight.POUNDS_PER_KILO * 13); // lower limit
-        // @todo hard-coded value for now, will eventually use MSJ calculation:
-        maintenanceMifflinValue = MIFFLIN_ST_JOUR_MAINTENANCE;
+
+        // @todo hard-coded MSJ values, set them in code -- if user wants to use Mifflin
+        MifflinStJeor msj = new MifflinStJeor(true, weight, 5, 11, 46,
+                Activity.SEDENTARY);
+
+        maintenanceMifflinValue = msj.getDailyCalories();
     }
 
     public int getMaintenanceUpperThreshold() {

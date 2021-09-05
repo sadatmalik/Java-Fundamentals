@@ -20,12 +20,13 @@ Intake macros for gain/loss cycle
 Mifflin calculation mode selector for Calorie and Macro calculations
 Set gain/loss mode flag
 Calculate Macros using Mifflin or Upper/Lower thresholds
+Mifflin formula calculations
 
 Todo:
-Mifflin formula calculations
 Manual override for maintenance calorie levels
 Add a DB/persistence layer for historical data
 Add charting function for historical data
 Create a front end for data entry and display
 Add a exercise weight / body composition progress tracker
+Support a way for the user to provide MSJ arguments
 
