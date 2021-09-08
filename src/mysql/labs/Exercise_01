@@ -98,5 +98,5 @@ VALUES ('meister', 'eckhart', 8);
  *       8.) Export the schema to a dump file and copy it to this folder.
 
  - Done: university_dump.sql
- 
+
  */

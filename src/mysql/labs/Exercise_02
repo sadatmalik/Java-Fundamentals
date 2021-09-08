@@ -16,13 +16,19 @@
 *
 *   Take some time to think through this. Pulling out a pen and paper and drawing a basic diagram of the tables and
 *   associations is always a great idea. See this link for inspiration: https://images.megapixl.com/1682/16827854.jpg
-*
+
+- OK
+
 *   After you've designed the database on paper, you can also feel free to explore tools like https://dbdiagram.io/d
 *   to create fancy diagrams (and nice SQL exports). You can also explore the EER Diagram Tool within MySQLWorkbench.
-*
+
+- OK -- Need some help with MySQLWorkbench EER --
+
 *   Next, create the schema, create the tables, create all the primary keys and all appropriate foriegn keys, and
 *   populate the database with a enough information to make it interesting.
-*
+
+- OK - done -- schema and data dump : air_travel_dump.sql
+
 *   In the next exercise, we'll dig into querying this database.
 *
 */
