@@ -5,16 +5,95 @@
 *   Now that you have your air travel database all set up and populated, please demonstrate how to:
 *
 *       1.) Query all flights on a specific day
+
+SELECT * FROM flights
+WHERE CAST(departure_time AS DATE) = '2021-09-08';
+
+
 *       2.) Query all flights between two specific cities on a specific day
+
+SELECT * FROM flights
+WHERE CAST(departure_time AS DATE) = '2021-09-08'
+AND source IN (1, 6)
+AND destination IN (1, 6);
+
+
 *       3.) Query all passengers on a specific flight between two specific cities today
+
+SELECT f.id AS flight_id, p.*
+FROM passengers p
+JOIN tickets t
+ON p.id = t.passenger_id
+JOIN flights f
+ON t.flight_id = f.id
+WHERE CAST(f.departure_time AS DATE) = '2021-09-08'
+AND source IN (1, 6)
+AND destination IN (1, 6)
+AND f.id = 7;
+
 *       4.) Query the flight information for a specific passenger on a specific flight
+
+SELECT DISTINCT f.*
+FROM flights f
+JOIN tickets t
+ON f.id = t.flight_id
+JOIN passengers p
+ON t.passenger_id = p.id
+WHERE p.id = 1 AND f.id = 8;
+
 *       5.) Query the passenger information for a specific user on a specific flight yesterday
+
+SELECT p.*
+FROM passengers p
+JOIN tickets t
+ON p.id = t.passenger_id
+JOIN flights f
+ON t.flight_id = f.id
+WHERE CAST(f.departure_time AS DATE) = '2021-09-07'
+AND f.id = 7
+AND p.id = 3;
+
+
 *       6.) Query the number of flights between two specific cities this week, month, and year
+
+SELECT COUNT(id)
+FROM flights
+WHERE source = 1
+AND destination = 6
+AND CAST(departure_time AS DATE) > '2021-09-07'
+AND CAST(departure_time AS DATE) < '2021-09-14';
+
+
 *       7.) Query the number of passengers that travelled between two specific cities today, this week, month and year
+
+SELECT COUNT(p.id)
+FROM passengers p
+JOIN tickets t
+ON p.id = t.passenger_id
+JOIN flights f
+ON t.flight_id = f.id
+WHERE f.source = 1
+AND f.destination = 6
+AND CAST(f.departure_time AS DATE) > '2021-09-07'
+AND CAST(f.departure_time AS DATE) < '2021-09-14';
+
+
 *       8.) Insert records for new flights between airports
+
+INSERT INTO flights (plane_id, airline_id, flight_num, source, departure_time, destination, arrival_time)
+VALUES (1, 1, 'BA009', 1, '2021-09-08 16:50:00', 14, '2021-09-08 23:00:00');
+
+
 *       9.) Insert records for new tickets and passengers on specific flights
+
+INSERT INTO tickets (passenger_id, flight_id)
+VALUES (2, 6);
+
+
 *       10.) Update meal preference (or something similar) for a specific passenger on a specific flight
 *       Bonus: Have some fun - get creative - what else can you do? Flex those SQL muscles and show us what
 *           you've got! :)
+
+* @TODO -- 10.)
 *
 */
