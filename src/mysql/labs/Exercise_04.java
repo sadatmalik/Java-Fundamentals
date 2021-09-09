@@ -17,6 +17,8 @@ package mysql.labs;
  */
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Exercise_04 {
@@ -34,10 +36,12 @@ public class Exercise_04 {
 
         Flight flight = new Flight(Plane.BOEING_747, Airline.AMERICAN_AIRLINES, "AA203",
                 Location.NEW_YORK, Location.DUBAI,
-                new Date(121, 8, 17, 16, 30),
-                new Date(121, 8, 17, 22, 00));
+                new Date(121, 8, 18, 16, 30),
+                new Date(121, 8, 18, 22, 00));
 
         // createFlight(flight);
+
+        ArrayList<Flight> flightsToday = getFlightsToday();
 
 
         /*
@@ -62,6 +66,7 @@ public class Exercise_04 {
         database.close();
     }
 
+
     private static void createFlight(int planeId, int airlineId, String flightNum,
                                      int source, Timestamp departure, int destination,
                                      Timestamp arrival) {
@@ -82,7 +87,10 @@ public class Exercise_04 {
             ps.setInt(6, destination);
             ps.setTimestamp(7, arrival);
 
+            System.out.println(ps);
+
             ps.executeUpdate();
+            ps.close();
 
             System.out.println("Inserted Flight into DB: " +
 
@@ -119,7 +127,10 @@ public class Exercise_04 {
             ps.setInt(6, flight.getDestination().getLocationId());
             ps.setTimestamp(7, new Timestamp(flight.getArrivalDateTime().getTime()));
 
+            System.out.println(ps);
+
             ps.executeUpdate();
+            ps.close();
 
             System.out.println("Inserted Flight into DB: " + flight.toString());
 
@@ -127,5 +138,78 @@ public class Exercise_04 {
             e.printStackTrace();
         }
     }
+
+    private static ArrayList<Flight> getFlightsToday() {
+        Date date = new Date();
+        return getFlightsByDate(date);
+    }
+
+    private static ArrayList<Flight> getFlightsByDate(Date date) {
+        ArrayList<Flight> flights = new ArrayList<>();
+
+        String sql = "SELECT * FROM flights " +
+                "WHERE CAST(departure_time AS DATE) = ?;";
+
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String dateAsString = formatter.format(date);
+
+            ps.setString(1, dateAsString);
+
+            System.out.println(ps);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                // public Flight(Plane planeType, Airline airline, String flightNum,
+                //                  Location source, Location destination,
+                //                  Date departureDateTime, Date arrivalDateTime) {
+                //
+                //        this.planeType = planeType;
+                //        this.airline = airline;
+                //        this.flightNum = flightNum;
+                //        this.source = source;
+                //        this.destination = destination;
+                //        this.departureDateTime = departureDateTime;
+                //        this.arrivalDateTime = arrivalDateTime;
+                //
+                //    }
+
+                int planeId = rs.getInt(2);
+                int airlineId = rs.getInt(3);
+                String flightNum = rs.getString(4);
+                int sourceId = rs.getInt(6);
+                String departure = rs.getString(7);
+                int destId = rs.getInt(8);
+                String arrival = rs.getString(9);
+
+                //@TODO -- 9/11 -- Pick up from here -- Need to convert Plane, Airline, and Location int ID's to Enum types
+                System.out.println("Got Flight from DB: " +
+                        "Flight{" +
+                        "planeType=" + planeId +
+                        ", airline=" + airlineId +
+                        ", flightNum='" + flightNum + '\'' +
+                        ", source=" + sourceId +
+                        ", destination=" + destId +
+                        ", departureDateTime=" + departure +
+                        ", arrivalDateTime=" + arrival +
+                        '}');
+
+            }
+
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        return flights;
+    }
+
 
 }

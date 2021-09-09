@@ -28,7 +28,7 @@ public class JDBCConnection {
 
         } catch (ClassNotFoundException cnfe) {
             // Unable to load driver
-            System.out.println("Unable to load driver class");
+            System.out.println("Unable to load driver - class not found");
             cnfe.printStackTrace();
 
         } catch (SQLException sqe) {
