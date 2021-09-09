@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public class JDBCConnection {
 
     Connection connection;
+    String schemaName;
 
     public JDBCConnection(String hostname, int port, String dbname,
                           String username, String password) {
@@ -19,7 +20,9 @@ public class JDBCConnection {
             // 2. Connect
             String connectionUrl = "jdbc:mysql://" + hostname + ":" + port +
                     "/" + dbname;
+
             connection = DriverManager.getConnection(connectionUrl, username, password);
+            schemaName = hostname + "/" + dbname;
 
             //
 
@@ -37,6 +40,10 @@ public class JDBCConnection {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public String getSchemaName() {
+        return schemaName;
     }
 
     public void close() {

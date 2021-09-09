@@ -16,30 +16,29 @@ package mysql.labs;
 *
  */
 
-import com.mysql.cj.result.SqlDateValueFactory;
-
 import java.sql.*;
 import java.util.Date;
 
 public class Exercise_04 {
 
-    private static Connection connection;
+    private static Connection dbConnection;
 
     public static void main(String[] args) {
 
-        JDBCConnection jdbc = new JDBCConnection("localhost", 3306, "air_travel",
+        JDBCConnection database = new JDBCConnection("localhost", 3306, "air_travel",
                 "sadat", "pa55word");
 
-        connection = jdbc.getConnection();
+        dbConnection = database.getConnection();
+
+        System.out.println("Got connection to DB: " + database.getSchemaName());
 
         Flight flight = new Flight(Plane.BOEING_747, Airline.AMERICAN_AIRLINES, "AA203",
                 Location.NEW_YORK, Location.DUBAI,
-                new Date(121, 8, 15, 16, 30),
-                new Date(121, 8, 15, 22, 00));
+                new Date(121, 8, 17, 16, 30),
+                new Date(121, 8, 17, 22, 00));
 
-        createFlight(flight);
+        // createFlight(flight);
 
-        // @TODO add some console logging
 
         /*
 
@@ -60,7 +59,7 @@ public class Exercise_04 {
          */
         
 
-        jdbc.close();
+        database.close();
     }
 
     private static void createFlight(int planeId, int airlineId, String flightNum,
@@ -73,7 +72,7 @@ public class Exercise_04 {
                 "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
 
             ps.setInt(1, planeId);
             ps.setInt(2, airlineId);
@@ -84,6 +83,18 @@ public class Exercise_04 {
             ps.setTimestamp(7, arrival);
 
             ps.executeUpdate();
+
+            System.out.println("Inserted Flight into DB: " +
+
+            "Flight{" +
+                    "planeType=" + planeId +
+                    ", airline=" + airlineId +
+                    ", flightNum='" + flightNum + '\'' +
+                    ", source=" + source +
+                    ", destination=" + destination +
+                    ", departureDateTime=" + departure +
+                    ", arrivalDateTime=" + arrival +
+                    '}');
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,7 +109,7 @@ public class Exercise_04 {
                 "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
 
             ps.setInt(1, flight.getPlaneType().getId());
             ps.setInt(2, flight.getAirline().getAirlineId());
@@ -109,6 +120,8 @@ public class Exercise_04 {
             ps.setTimestamp(7, new Timestamp(flight.getArrivalDateTime().getTime()));
 
             ps.executeUpdate();
+
+            System.out.println("Inserted Flight into DB: " + flight.toString());
 
         } catch (SQLException e) {
             e.printStackTrace();

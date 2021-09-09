@@ -53,4 +53,17 @@ public class Flight {
     public Date getArrivalDateTime() {
         return arrivalDateTime;
     }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "planeType=" + planeType +
+                ", airline=" + airline +
+                ", flightNum='" + flightNum + '\'' +
+                ", source=" + source +
+                ", destination=" + destination +
+                ", departureDateTime=" + departureDateTime +
+                ", arrivalDateTime=" + arrivalDateTime +
+                '}';
+    }
 }
