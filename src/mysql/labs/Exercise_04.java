@@ -164,6 +164,26 @@ public class Exercise_04 {
 
             while (rs.next()) {
 
+                int planeId = rs.getInt(2);
+                int airlineId = rs.getInt(3);
+                String flightNum = rs.getString(4);
+                int sourceId = rs.getInt(6);
+                String departure = rs.getString(7);
+                int destId = rs.getInt(8);
+                String arrival = rs.getString(9);
+
+                System.out.println("Got Flight data from DB: " +
+                        "Flight{" +
+                        "planeType=" + planeId +
+                        ", airline=" + airlineId +
+                        ", flightNum='" + flightNum + '\'' +
+                        ", source=" + sourceId +
+                        ", destination=" + destId +
+                        ", departureDateTime=" + departure +
+                        ", arrivalDateTime=" + arrival +
+                        '}');
+
+                //@TODO -- 9/11 -- Pick up from here -- Need to convert Plane, Airline, and Location int ID's to Enum types
                 // public Flight(Plane planeType, Airline airline, String flightNum,
                 //                  Location source, Location destination,
                 //                  Date departureDateTime, Date arrivalDateTime) {
@@ -177,26 +197,8 @@ public class Exercise_04 {
                 //        this.arrivalDateTime = arrivalDateTime;
                 //
                 //    }
-
-                int planeId = rs.getInt(2);
-                int airlineId = rs.getInt(3);
-                String flightNum = rs.getString(4);
-                int sourceId = rs.getInt(6);
-                String departure = rs.getString(7);
-                int destId = rs.getInt(8);
-                String arrival = rs.getString(9);
-
-                //@TODO -- 9/11 -- Pick up from here -- Need to convert Plane, Airline, and Location int ID's to Enum types
-                System.out.println("Got Flight from DB: " +
-                        "Flight{" +
-                        "planeType=" + planeId +
-                        ", airline=" + airlineId +
-                        ", flightNum='" + flightNum + '\'' +
-                        ", source=" + sourceId +
-                        ", destination=" + destId +
-                        ", departureDateTime=" + departure +
-                        ", arrivalDateTime=" + arrival +
-                        '}');
+                Plane planeType = Plane.from(planeId);
+                System.out.println("Plane type = " + planeType);
 
             }
 
