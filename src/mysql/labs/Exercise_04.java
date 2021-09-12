@@ -198,7 +198,10 @@ public class Exercise_04 {
                 //
                 //    }
                 Plane planeType = Plane.from(planeId);
-                System.out.println("Plane type = " + planeType);
+                System.out.println("Plane = " + planeType);
+
+                Airline airlineID = Airline.from(airlineId);
+                System.out.println("Airline = " + airlineID);
 
             }
 
