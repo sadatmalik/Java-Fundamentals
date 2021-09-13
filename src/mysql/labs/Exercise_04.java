@@ -203,6 +203,12 @@ public class Exercise_04 {
                 Airline airlineID = Airline.from(airlineId);
                 System.out.println("Airline = " + airlineID);
 
+                Location src = Location.from(sourceId);
+                System.out.println("Source = " + src);
+
+                Location dest = Location.from(destId);
+                System.out.println("Destination = " + dest);
+
             }
 
             ps.close();

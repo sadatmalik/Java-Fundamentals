@@ -18,7 +18,7 @@ public enum Location {
     private final int locationId;
 
     private static final Map<Integer, Location> locationsById;
-    
+
     static {
         locationsById = new HashMap();
         for (Location loc : Location.values()) {
@@ -34,7 +34,7 @@ public enum Location {
         return locationId;
     }
 
-    public Location from(int id) {
+    public static Location from(int id) {
         return locationsById.get(id);
     }
 }
