@@ -45,13 +45,20 @@ public class Exercise_04 {
         // Get today's flight info
         ArrayList<Flight> flights = getFlightsToday();
         // @TODO Add a nicer Flight display method
-        System.out.println("Flights today: ");
+        System.out.println("\nFlights today: ");
         for (Flight f : flights) {
             System.out.println(f);
         }
+        System.out.println();
 
         // Get flights between two specific cities on a specific day
         flights = getFlights(Location.LONDON, Location.NEW_YORK, new Date(121, 8, 8));
+        // @TODO Add a nicer Flight display method
+        System.out.println("\nFlights between London and New York on Sept 8 2021 : ");
+        for (Flight f : flights) {
+            System.out.println(f);
+        }
+        System.out.println();
 
         /*
 
@@ -172,49 +179,7 @@ public class Exercise_04 {
             System.out.println(ps);
 
             ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                int planeId = rs.getInt(2);
-                int airlineId = rs.getInt(3);
-                String flightNum = rs.getString(4);
-                int sourceId = rs.getInt(6);
-                String departure = rs.getString(7);
-                int destId = rs.getInt(8);
-                String arrival = rs.getString(9);
-
-                System.out.println("Got Flight data from DB: " +
-                        "Flight{" +
-                        "planeType=" + planeId +
-                        ", airline=" + airlineId +
-                        ", flightNum='" + flightNum + '\'' +
-                        ", source=" + sourceId +
-                        ", destination=" + destId +
-                        ", departureDateTime=" + departure +
-                        ", arrivalDateTime=" + arrival +
-                        '}');
-
-                Plane planeType = Plane.from(planeId);
-                Airline airline = Airline.from(airlineId);
-                Location src = Location.from(sourceId);
-                Location dest = Location.from(destId);
-
-                try {
-                    Date d = JDBCConnection.getDateFormat().parse(departure);
-                    Date a = JDBCConnection.getDateFormat().parse(arrival);
-
-                    Flight flight = new Flight(planeType, airline, flightNum, src, dest, d, a);
-
-                    flights.add(flight);
-
-                    System.out.println("Converted to Flight object : " + flight);
-
-                } catch (ParseException e) {
-                    System.out.println("Unable to parse date string : " + departure);
-                    e.printStackTrace();
-                }
-
-            }
+            flights = parseResultSet(rs);
 
             ps.close();
 
@@ -247,49 +212,7 @@ public class Exercise_04 {
             System.out.println(ps);
 
             ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                int planeId = rs.getInt(2);
-                int airlineId = rs.getInt(3);
-                String flightNum = rs.getString(4);
-                int sourceId = rs.getInt(6);
-                String departure = rs.getString(7);
-                int destId = rs.getInt(8);
-                String arrival = rs.getString(9);
-
-                System.out.println("Got Flight data from DB: " +
-                        "Flight{" +
-                        "planeType=" + planeId +
-                        ", airline=" + airlineId +
-                        ", flightNum='" + flightNum + '\'' +
-                        ", source=" + sourceId +
-                        ", destination=" + destId +
-                        ", departureDateTime=" + departure +
-                        ", arrivalDateTime=" + arrival +
-                        '}');
-
-                Plane planeType = Plane.from(planeId);
-                Airline airline = Airline.from(airlineId);
-                Location src = Location.from(sourceId);
-                Location dest = Location.from(destId);
-
-                try {
-                    Date d = JDBCConnection.getDateFormat().parse(departure);
-                    Date a = JDBCConnection.getDateFormat().parse(arrival);
-
-                    Flight flight = new Flight(planeType, airline, flightNum, src, dest, d, a);
-
-                    flights.add(flight);
-
-                    System.out.println("Converted to Flight object : " + flight);
-
-                } catch (ParseException e) {
-                    System.out.println("Unable to parse date string : " + departure);
-                    e.printStackTrace();
-                }
-
-            }
+            flights = parseResultSet(rs);
 
             ps.close();
 
@@ -300,5 +223,53 @@ public class Exercise_04 {
         return flights;
     }
 
+    // @TODO consider moving all these static DB query methods as instance methods of some standalone class
+    private static ArrayList<Flight> parseResultSet(ResultSet rs) throws SQLException {
+        ArrayList<Flight> flights = new ArrayList<>();
+
+        while (rs.next()) {
+
+            int planeId = rs.getInt(2);
+            int airlineId = rs.getInt(3);
+            String flightNum = rs.getString(4);
+            int sourceId = rs.getInt(6);
+            String departure = rs.getString(7);
+            int destId = rs.getInt(8);
+            String arrival = rs.getString(9);
+
+            System.out.println("Got Flight data from DB: " +
+                    "Flight{" +
+                    "planeType=" + planeId +
+                    ", airline=" + airlineId +
+                    ", flightNum='" + flightNum + '\'' +
+                    ", source=" + sourceId +
+                    ", destination=" + destId +
+                    ", departureDateTime=" + departure +
+                    ", arrivalDateTime=" + arrival +
+                    '}');
+
+            Plane planeType = Plane.from(planeId);
+            Airline airline = Airline.from(airlineId);
+            Location src = Location.from(sourceId);
+            Location dest = Location.from(destId);
+
+            try {
+                Date d = JDBCConnection.getDateFormat().parse(departure);
+                Date a = JDBCConnection.getDateFormat().parse(arrival);
+
+                Flight flight = new Flight(planeType, airline, flightNum, src, dest, d, a);
+
+                flights.add(flight);
+
+                System.out.println("Converted to Flight object : " + flight);
+
+            } catch (ParseException e) {
+                System.out.println("Unable to parse date string : " + departure);
+                e.printStackTrace();
+            }
+        }
+
+        return flights;
+    }
 
 }
