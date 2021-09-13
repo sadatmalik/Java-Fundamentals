@@ -43,6 +43,11 @@ public class Exercise_04 {
         // createFlight(flight);
 
         ArrayList<Flight> flightsToday = getFlightsToday();
+        // @TODO Add a nicer Flight display method
+        System.out.println("Flights today: ");
+        for (Flight f : flightsToday) {
+            System.out.println(f);
+        }
 
 
         /*
@@ -184,20 +189,6 @@ public class Exercise_04 {
                         ", arrivalDateTime=" + arrival +
                         '}');
 
-                //@TODO -- 9/11 -- Pick up from here -- Need to convert Plane, Airline, and Location int ID's to Enum types
-                // public Flight(Plane planeType, Airline airline, String flightNum,
-                //                  Location source, Location destination,
-                //                  Date departureDateTime, Date arrivalDateTime) {
-                //
-                //        this.planeType = planeType;
-                //        this.airline = airline;
-                //        this.flightNum = flightNum;
-                //        this.source = source;
-                //        this.destination = destination;
-                //        this.departureDateTime = departureDateTime;
-                //        this.arrivalDateTime = arrivalDateTime;
-                //
-                //    }
                 Plane planeType = Plane.from(planeId);
                 Airline airline = Airline.from(airlineId);
                 Location src = Location.from(sourceId);
@@ -207,15 +198,16 @@ public class Exercise_04 {
                     Date d = JDBCConnection.getDateFormat().parse(departure);
                     Date a = JDBCConnection.getDateFormat().parse(arrival);
 
-                    System.out.println(d);
-                    System.out.println(a);
+                    Flight flight = new Flight(planeType, airline, flightNum, src, dest, d, a);
+
+                    flights.add(flight);
+
+                    System.out.println("Converted to Flight object : " + flight);
 
                 } catch (ParseException e) {
                     System.out.println("Unable to parse date string : " + departure);
                     e.printStackTrace();
                 }
-
-                //Flight flight = new Flight(planeType, airline, flightNum, src, dest, )
 
             }
 
@@ -224,8 +216,6 @@ public class Exercise_04 {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
 
         return flights;
     }
