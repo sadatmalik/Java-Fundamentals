@@ -40,10 +40,17 @@ public class Exercise_04 {
                 new Date(121, 8, 18, 16, 30),
                 new Date(121, 8, 18, 22, 00));
 
-        // createFlight(flight);
 
-        // Get today's flight info
-        ArrayList<Flight> flights = getFlightsToday();
+        /* Using method overloading to create flights with different parameters */
+
+        // createFlight(flight);
+        // createFlight(3, 1, "BA009", 1, Timestamp.valueOf("2021-09-08 15:00:00"), 8, Timestamp.valueOf("2021-09-08 23:00:00"));
+
+
+        /* Using method overloading to get flight info for different parameters */
+
+        // 1. Get today's flight info
+        ArrayList<Flight> flights = getFlights();
         // @TODO Add a nicer Flight display method
         System.out.println("\nFlights today: ");
         for (Flight f : flights) {
@@ -51,7 +58,7 @@ public class Exercise_04 {
         }
         System.out.println();
 
-        // Get flights between two specific cities on a specific day
+        // 2. Get flights between two specific cities on a specific day
         flights = getFlights(Location.LONDON, Location.NEW_YORK, new Date(121, 8, 8));
         // @TODO Add a nicer Flight display method
         System.out.println("\nFlights between London and New York on Sept 8 2021 : ");
@@ -61,12 +68,6 @@ public class Exercise_04 {
         System.out.println();
 
         /*
-
-        These have all been tested then commented out to prevent duplication on re-run:
-
-        createFlight(3, 1, "BA009", 1, Timestamp.valueOf("2021-09-08 15:00:00"),
-                8, Timestamp.valueOf("2021-09-08 23:00:00"));
-
         @TODO:
         queryFlight(...);
         updateFlight(...);
@@ -156,7 +157,7 @@ public class Exercise_04 {
     }
 
     // Get flights for today
-    private static ArrayList<Flight> getFlightsToday() {
+    private static ArrayList<Flight> getFlights() {
         Date date = new Date();
         return getFlights(date);
     }
