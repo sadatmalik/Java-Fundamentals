@@ -15,11 +15,11 @@ public class JavaLinkedList {
         // add elements to the end of the list
         words.add("Are");
         words.add("Cool!");
-        // push elements onto the top (front) of0(1) the list;
+        // push elements onto the top (front) of 0(1) the list;
         words.push("Linked");
         words.push("Lists");
 
-        // pop elements of the "top" of the List
+        // pop elements off the "top" of the List
         System.out.print(words.pop() + " ");
         System.out.print(words.pop() + " ");
         // get elements by index
@@ -31,8 +31,8 @@ public class JavaLinkedList {
         words.remove(0);
 
         words.add("Java's ");
-        words.add("LinkedList");
-        words.add(" class ");
+        words.add("LinkedList ");
+        words.add("class ");
         words.add("has many additional methods ");
         words.add("we can use ");
         words.add("which almost make it appear as an ArrayList ");
