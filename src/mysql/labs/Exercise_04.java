@@ -42,13 +42,16 @@ public class Exercise_04 {
 
         // createFlight(flight);
 
-        ArrayList<Flight> flightsToday = getFlightsToday();
+        // Get today's flight info
+        ArrayList<Flight> flights = getFlightsToday();
         // @TODO Add a nicer Flight display method
         System.out.println("Flights today: ");
-        for (Flight f : flightsToday) {
+        for (Flight f : flights) {
             System.out.println(f);
         }
 
+        // Get flights between two specific cities on a specific day
+        flights = getFlights(Location.LONDON, Location.NEW_YORK, new Date(121, 8, 8));
 
         /*
 
@@ -145,12 +148,14 @@ public class Exercise_04 {
         }
     }
 
+    // Get flights for today
     private static ArrayList<Flight> getFlightsToday() {
         Date date = new Date();
-        return getFlightsByDate(date);
+        return getFlights(date);
     }
 
-    private static ArrayList<Flight> getFlightsByDate(Date date) {
+    // Get flights for a specific date
+    private static ArrayList<Flight> getFlights(Date date) {
         ArrayList<Flight> flights = new ArrayList<>();
 
         String sql = "SELECT * FROM flights " +
@@ -163,6 +168,81 @@ public class Exercise_04 {
             String dateAsString = formatter.format(date);
 
             ps.setString(1, dateAsString);
+
+            System.out.println(ps);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                int planeId = rs.getInt(2);
+                int airlineId = rs.getInt(3);
+                String flightNum = rs.getString(4);
+                int sourceId = rs.getInt(6);
+                String departure = rs.getString(7);
+                int destId = rs.getInt(8);
+                String arrival = rs.getString(9);
+
+                System.out.println("Got Flight data from DB: " +
+                        "Flight{" +
+                        "planeType=" + planeId +
+                        ", airline=" + airlineId +
+                        ", flightNum='" + flightNum + '\'' +
+                        ", source=" + sourceId +
+                        ", destination=" + destId +
+                        ", departureDateTime=" + departure +
+                        ", arrivalDateTime=" + arrival +
+                        '}');
+
+                Plane planeType = Plane.from(planeId);
+                Airline airline = Airline.from(airlineId);
+                Location src = Location.from(sourceId);
+                Location dest = Location.from(destId);
+
+                try {
+                    Date d = JDBCConnection.getDateFormat().parse(departure);
+                    Date a = JDBCConnection.getDateFormat().parse(arrival);
+
+                    Flight flight = new Flight(planeType, airline, flightNum, src, dest, d, a);
+
+                    flights.add(flight);
+
+                    System.out.println("Converted to Flight object : " + flight);
+
+                } catch (ParseException e) {
+                    System.out.println("Unable to parse date string : " + departure);
+                    e.printStackTrace();
+                }
+
+            }
+
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flights;
+    }
+
+    // Get flights between two cities for a particular date
+    private static ArrayList<Flight> getFlights(Location source, Location destination, Date date) {
+        ArrayList<Flight> flights = new ArrayList<>();
+
+        String sql = "SELECT * FROM flights " +
+                "WHERE CAST(departure_time AS DATE) = ? " +
+                "AND source = ? " +
+                "AND destination = ?;";
+
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String dateAsString = formatter.format(date);
+
+            ps.setString(1, dateAsString);
+            ps.setInt(2, source.getLocationId());
+            ps.setInt(3, destination.getLocationId());
 
             System.out.println(ps);
 
