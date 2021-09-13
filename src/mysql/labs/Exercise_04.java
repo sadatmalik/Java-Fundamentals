@@ -17,6 +17,7 @@ package mysql.labs;
  */
 
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -198,16 +199,23 @@ public class Exercise_04 {
                 //
                 //    }
                 Plane planeType = Plane.from(planeId);
-                System.out.println("Plane = " + planeType);
-
-                Airline airlineID = Airline.from(airlineId);
-                System.out.println("Airline = " + airlineID);
-
+                Airline airline = Airline.from(airlineId);
                 Location src = Location.from(sourceId);
-                System.out.println("Source = " + src);
-
                 Location dest = Location.from(destId);
-                System.out.println("Destination = " + dest);
+
+                try {
+                    Date d = JDBCConnection.getDateFormat().parse(departure);
+                    Date a = JDBCConnection.getDateFormat().parse(arrival);
+
+                    System.out.println(d);
+                    System.out.println(a);
+
+                } catch (ParseException e) {
+                    System.out.println("Unable to parse date string : " + departure);
+                    e.printStackTrace();
+                }
+
+                //Flight flight = new Flight(planeType, airline, flightNum, src, dest, )
 
             }
 

@@ -4,11 +4,15 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class JDBCConnection {
 
-    Connection connection;
-    String schemaName;
+    private Connection connection;
+    private String schemaName;
+
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public JDBCConnection(String hostname, int port, String dbname,
                           String username, String password) {
@@ -58,5 +62,8 @@ public class JDBCConnection {
 
     }
 
+    public static SimpleDateFormat getDateFormat() {
+        return dateFormat;
+    }
 
 }
