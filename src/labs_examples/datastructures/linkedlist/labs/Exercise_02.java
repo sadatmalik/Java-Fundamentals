@@ -51,6 +51,16 @@ public class Exercise_02 {
         System.out.println("Head = " + myList.head());
         System.out.println("Tail = " + myList.tail());
 
+        myList.insertAfter("Sadat", "Malik");
+        System.out.println(myList);
+        myList.insertAfter("more", "time");
+        System.out.println(myList);
+
+        myList.insertBefore("Sadat", "Mr.");
+        System.out.println(myList);
+        myList.insertBefore("one", "again");
+        System.out.println(myList);
+
         while (myList.size() != 0) {
             System.out.println("Popped = " + myList.pop());
         }
@@ -186,6 +196,45 @@ class CustomDoublyLinkedList<T> {
 
     public int size() {
         return size;
+    }
+
+    // Added these methods for Exercise_03 - insertAfter, insertBefore
+    public void insertAfter(T data, T newData) {
+        Node<T> currentNode = head;
+        try {
+            while (currentNode.data != data) {
+                currentNode = currentNode.next;
+            }
+            Node<T> newNode = new Node(currentNode, newData, currentNode.next);
+            if (currentNode.next != null) {
+                currentNode.next.prev = newNode;
+            }
+            currentNode.next = newNode;
+            size++;
+
+        } catch (NullPointerException npe) {
+            System.out.println("No such element in list: " + data);
+        }
+    }
+
+    public void insertBefore(T data, T newData) {
+        Node<T> currentNode = head;
+        try {
+            while (currentNode.data != data) {
+                currentNode = currentNode.next;
+            }
+            Node<T> newNode = new Node<>(currentNode.prev, newData, currentNode);
+            if (currentNode.prev == null) {
+                head = newNode;
+            } else {
+                currentNode.prev.next = newNode;
+            }
+            currentNode.prev = newNode;
+            size++;
+
+        } catch (NullPointerException npe) {
+            System.out.println("No such element in list: " + data);
+        }
     }
 
     public String toString() {
