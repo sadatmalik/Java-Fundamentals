@@ -47,7 +47,7 @@ public class Exercise_04 {
         // createFlight(3, 1, "BA009", 1, Timestamp.valueOf("2021-09-08 15:00:00"), 8, Timestamp.valueOf("2021-09-08 23:00:00"));
 
 
-        /* Using method overloading to get flight info for different parameters */
+        /* Using method overloading to queryFlight(...); info for different parameters */
 
         // 1. Get today's flight info
         ArrayList<Flight> flights = getFlights();
@@ -67,9 +67,11 @@ public class Exercise_04 {
         }
         System.out.println();
 
+        /* createPassenger(...); */
+        createPassenger("Sadat", "Malik", "123456789", "sadat@coding.org");
+
         /*
         @TODO:
-        queryFlight(...);
         updateFlight(...);
         deleteFlight(...);
 
@@ -81,6 +83,40 @@ public class Exercise_04 {
         
 
         database.close();
+    }
+
+    private static void createPassenger(String firstName, String lastName,
+                                        String passportNum, String email) {
+
+        String sql = "INSERT INTO passengers " +
+                "(first_name, last_name, passport_num, email_address) " +
+                "VALUES (?, ?, ?, ?);";
+
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+            ps.setString(3, passportNum);
+            ps.setString(4, email);
+
+            System.out.println(ps);
+
+            ps.executeUpdate();
+            ps.close();
+
+            System.out.println("Inserted Passenger into DB: " +
+
+                    "Passenger{" +
+                    "firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", passportNum='" + passportNum + '\'' +
+                    ", emailAddress='" + email + '\'' +
+                    '}');
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
