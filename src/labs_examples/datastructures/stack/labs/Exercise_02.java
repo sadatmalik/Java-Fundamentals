@@ -1,5 +1,7 @@
 package labs_examples.datastructures.stack.labs;
 
+import java.util.Arrays;
+
 /**
  *      Stacks - Exercise_02
  *
@@ -9,10 +11,10 @@ package labs_examples.datastructures.stack.labs;
  *      Your custom Stack class must also do the following: (Ryan Take 2)
  *
  *      done - 1) throw a custom exception when trying to pop an element from an empty Stack
- *      2) resize the Stack (the underlying array) to be twice the size when the Stack is more than 3/4 full
- *      3) resize the Stack (the underlying array) to be half the size when the Stack is more than 1/4 empty
- *      4) contain the methods peekFirst() and peekLast()
- *      5) contain a size() method
+ *      done - 2) resize the Stack (the underlying array) to be twice the size when the Stack is more than 3/4 full
+ *      done - 3) resize the Stack (the underlying array) to be half the size when the Stack is more than 1/4 empty
+ *      done - 4) contain the methods peekFirst() and peekLast()
+ *      done - 5) contain a size() method
  *      6) contain a method to print out the data of all elements in the Stack
  *
  *      TIP: To initialize an new array of a Generic type you can use this:
@@ -24,17 +26,33 @@ class Stack<T> {
     private T[] data;
     private int pointer = 0;
 
+    private int upperLimit;
+    private int lowerLimit;
+
     public Stack() {
         data = (T[]) new Object[10];
+        upperLimit = 7;
+        lowerLimit = 0;
     }
 
     public void push(T item) {
         data[pointer] = item;
         pointer++;
+        if (pointer >= upperLimit) {
+            resize(data.length * 2);
+        }
     }
 
     public T peek() {
         return data[pointer-1];
+    }
+
+    public T peekFirst() {
+        return peek();
+    }
+
+    public T peekLast() {
+        return data[0];
     }
 
     public T pop() throws StackUnderFlowException{
@@ -44,6 +62,9 @@ class Stack<T> {
         T item = data[pointer-1];
         data[pointer-1] = null;
         pointer--;
+        if (lowerLimit != 0 && pointer <= lowerLimit) {
+            resize(data.length / 2);
+        }
         return item;
     }
 
@@ -61,6 +82,35 @@ class Stack<T> {
         }
         return depth;
     }
+
+    public int size() {
+        return pointer;
+    }
+
+    private void resize(int size) {
+        T[] newArray = (T[]) new Object[size];
+        for (int i = 0; i <= pointer; i++) {
+            newArray[i] = data[i];
+        }
+        data = newArray;
+
+        upperLimit = data.length * 3 / 4;
+        lowerLimit = data.length / 4;
+
+        System.out.println("Resized stack = " + data.length +
+                ", upper limit = " + upperLimit + ", lower limit = " + lowerLimit);
+    }
+
+    @Override
+    public String toString() {
+        return "Stack{" +
+                "data=" + Arrays.toString(data) +
+                ", pointer=" + pointer +
+                ", upperLimit=" + upperLimit +
+                ", lowerLimit=" + lowerLimit +
+                '}';
+    }
+
 }
 
 class StackUnderFlowException extends Exception {
@@ -117,6 +167,32 @@ public class Exercise_02 {
 //            System.out.println("Stack is empty -- cannot pop()");
 //            sufe.printStackTrace();
 //        }
+
+        // resize - up
+        for (int i = 0; i < 10; i++) {
+            myStack.push(String.valueOf(i));
+        }
+
+        try {
+            System.out.println(myStack.pop());
+            System.out.println(myStack.pop());
+            System.out.println(myStack.pop());
+            System.out.println(myStack.pop());
+            System.out.println(myStack.pop());
+
+        } catch (StackUnderFlowException sufe) {
+            sufe.printStackTrace();
+        }
+
+        // peekFirst / peekLast
+        System.out.println("First = " + myStack.peekFirst());
+        System.out.println("Last = " + myStack.peekLast());
+
+        // size
+        System.out.println("Size = " + myStack.size());
+
+        // toString
+        System.out.println(myStack);
     }
 
 }
