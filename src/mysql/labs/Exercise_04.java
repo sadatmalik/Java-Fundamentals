@@ -43,7 +43,7 @@ public class Exercise_04 {
 
         /* Using method overloading to create flights with different parameters */
 
-        createFlight(flight);
+        // createFlight(flight);
         // createFlight(3, 1, "BA009", 1, Timestamp.valueOf("2021-09-08 15:00:00"), 8, Timestamp.valueOf("2021-09-08 23:00:00"));
 
 
@@ -70,6 +70,10 @@ public class Exercise_04 {
         /* createPassenger(...); */
         createPassenger("Sadat", "Malik", "123456789", "sadat@coding.org");
 
+        Passenger passenger = new Passenger("Edwardinia", "Rompannen",
+                "76548975", "er@fin.net");
+        createPassenger(passenger);
+
         /*
         @TODO:
         updateFlight(...);
@@ -83,6 +87,12 @@ public class Exercise_04 {
         
 
         database.close();
+    }
+
+    private static void createPassenger(Passenger passenger) {
+        
+        createPassenger(passenger.getFirstName(), passenger.getLastName(),
+                passenger.getPassportNum(), passenger.getEmailAddress());
     }
 
     private static void createPassenger(String firstName, String lastName,
