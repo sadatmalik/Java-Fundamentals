@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+// @TODO Add neater Flight and Passenger print methods
+
 public class Exercise_04 {
 
     private static Connection dbConnection;
@@ -41,56 +43,62 @@ public class Exercise_04 {
                 new Date(121, 8, 19, 22, 00));
 
 
-        /* Using method overloading to create flights with different parameters */
+        // 1. Create flights - method overloading
 
         // createFlight(flight);
         // createFlight(3, 1, "BA009", 1, Timestamp.valueOf("2021-09-08 15:00:00"), 8, Timestamp.valueOf("2021-09-08 23:00:00"));
 
-
-        /* Using method overloading to queryFlight(...); info for different parameters */
-
-        // 1. Get today's flight info
+        // 2. Get today's flight info
         ArrayList<Flight> flights = getFlights();
-        // @TODO Add a nicer Flight display method
         System.out.println("\nFlights today: ");
         for (Flight f : flights) {
             System.out.println(f);
         }
         System.out.println();
 
-        // 2. Get flights between two specific cities on a specific day
+        // 3. Get flights between two specific cities on a specific day
         flights = getFlights(Location.LONDON, Location.NEW_YORK, new Date(121, 8, 8));
-        // @TODO Add a nicer Flight display method
         System.out.println("\nFlights between London and New York on Sept 8 2021 : ");
         for (Flight f : flights) {
             System.out.println(f);
         }
         System.out.println();
 
-        /* createPassenger(...); */
-        createPassenger("Sadat", "Malik", "123456789", "sadat@coding.org");
+        // 4. Update flightNum
+        int rows = updateFlights("SG2055", "SG204");
+        System.out.println("\nFlights Updated - " + rows + " row(s)\n");
 
+        // 5. Delete flight with a given flight number
+        createFlight(3, 1, "BA999", 1, Timestamp.valueOf("2021-09-08 15:00:00"), 8, Timestamp.valueOf("2021-09-08 23:00:00"));
+        rows = deleteFlight("BA999");
+        System.out.println("\nFlights Deleted - " + rows + " row(s)\n");
+
+        // 6. Create passenger
+        createPassenger("Sadat", "Malik", "123456789", "sadat@coding.org");
         Passenger passenger = new Passenger("Edwardinia", "Rompannen",
                 "76548975", "er@fin.net");
         createPassenger(passenger);
 
-        /*
-        @TODO:
-        updateFlight(...);
-        deleteFlight(...);
+        // 7. Query passengers flyind between two cities
+        ArrayList<Passenger> passengers = getPassengers(Location.LONDON, Location.NEW_YORK);
+        System.out.println("All passengers flying from London to New York:");
+        for (Passenger p : passengers) {
+            System.out.println(p);
+        }
 
-        createPassenger(...);
-        queryPassenger(...);
-        updatePassenger(...);
-        deletePassenger(...);
-         */
-        
+        // 8. Update passport number for passenger by name
+        rows = updatePassportNumForPassenger("Edwardinia", "Rompannen", "7654321");
+        System.out.println("\nPassengers Updated - " + rows + " row(s)\n");
+
+        // 9. Delete passenger by name
+        rows = deletePassengerByName("Edwardinia", "Gabor");
+        System.out.println("\nPassengers Deleted - " + rows + " row(s)\n");
 
         database.close();
     }
 
     private static void createPassenger(Passenger passenger) {
-        
+
         createPassenger(passenger.getFirstName(), passenger.getLastName(),
                 passenger.getPassportNum(), passenger.getEmailAddress());
     }
@@ -127,6 +135,91 @@ public class Exercise_04 {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private static ArrayList<Passenger> getPassengers(Location source, Location dest) {
+
+        ArrayList<Passenger> passengers = new ArrayList<>();
+
+        String sql = "SELECT p.first_name, p.last_name, p.passport_num, p.email_address " +
+                "FROM passengers p " +
+                "JOIN tickets t " +
+                "ON p.id = t.passenger_id " +
+                "JOIN flights f " +
+                "ON t.flight_id = f.id " +
+                "WHERE f.source = ? " +
+                "AND f.destination = ?";
+
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+            ps.setInt(1, source.getLocationId());
+            ps.setInt(2, dest.getLocationId());
+
+            System.out.println(ps);
+
+            ResultSet rs = ps.executeQuery();
+            passengers = parsePassengerResultSet(rs);
+
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return passengers;
+
+    }
+
+    private static int updatePassportNumForPassenger(String firstName, String lastName, String newPassportNum) {
+        String sql = "UPDATE passengers " +
+                "SET passport_num = ? " +
+                "WHERE first_name = ? " +
+                "AND last_name = ?;";
+
+        int rowsAffected = 0;
+
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+            ps.setString(1, newPassportNum);
+            ps.setString(2, firstName);
+            ps.setString(3, lastName);
+
+            rowsAffected = ps.executeUpdate();
+
+            ps.close();
+
+        }  catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowsAffected;
+    }
+
+    private static int deletePassengerByName(String firstName, String lastName) {
+
+        String sql = "DELETE FROM passengers " +
+                "WHERE first_name = ? " +
+                "AND last_name = ?";
+
+        int rowsAffected = 0;
+
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+
+            rowsAffected = ps.executeUpdate();
+
+            ps.close();
+
+        } catch (SQLException sqe) {
+            sqe.printStackTrace();
+        }
+
+        return rowsAffected;
     }
 
     private static void createFlight(Flight flight) {
@@ -251,6 +344,58 @@ public class Exercise_04 {
         return flights;
     }
 
+    private static int updateFlights(String oldFlightNum, String newFlightNum) {
+
+        String sql = "UPDATE flights " +
+                "SET flight_num = ? " +
+                "WHERE flight_num = ?;";
+
+        int rowsAffected = 0;
+
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+            ps.setString(1, oldFlightNum);
+            ps.setString(2, newFlightNum);
+
+            System.out.println(ps);
+
+            rowsAffected = ps.executeUpdate();
+
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowsAffected;
+
+    }
+
+    private static int deleteFlight(String flightNum) {
+        String sql = "DELETE FROM flights " +
+                "WHERE flight_num = ?;";
+
+        int rowsAffected = 0;
+
+        try {
+            PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+            ps.setString(1, flightNum);
+
+            System.out.println(ps);
+
+            rowsAffected = ps.executeUpdate();
+
+            ps.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return rowsAffected;
+    }
+
     // @TODO consider moving all these static DB query methods as instance methods of some standalone class
     private static ArrayList<Flight> parseResultSet(ResultSet rs) throws SQLException {
         ArrayList<Flight> flights = new ArrayList<>();
@@ -298,6 +443,35 @@ public class Exercise_04 {
         }
 
         return flights;
+    }
+
+    private static ArrayList<Passenger> parsePassengerResultSet(ResultSet rs) throws SQLException {
+        ArrayList<Passenger> passengers = new ArrayList<>();
+
+        while (rs.next()) {
+
+            String firstName = rs.getString(1);
+            String lastName = rs.getString(2);
+            String passportNum = rs.getString(3);
+            String emailAddress = rs.getString(4);
+
+            System.out.println("Got Passenger data from DB: " +
+                    "Passenger{" +
+                    "firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", passportNum='" + passportNum + '\'' +
+                    ", emailAddress='" + emailAddress + '\'' +
+                    '}');
+
+            Passenger passenger = new Passenger(firstName, lastName, passportNum, emailAddress);
+
+            passengers.add(passenger);
+
+            System.out.println("Converted to Passenger object : " + passenger);
+
+        }
+
+        return passengers;
     }
 
 }
