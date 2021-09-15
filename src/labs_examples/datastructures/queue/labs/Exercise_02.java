@@ -1,10 +1,5 @@
 package labs_examples.datastructures.queue.labs;
 
-import java.sql.PreparedStatement;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.Queue;
-
 /**
  *      Queues - Exercise_02
  *
@@ -170,10 +165,10 @@ class QueueOnArray<T> {
         sb.append(data[pointer-1]);
 
         return "QueueOnArray{" +
-                "data=" + sb +
-                ", pointer=" + pointer +
-                ", lowerLimit=" + lowerLimit +
-                ", upperLimit=" + upperLimit +
+                "data='" + sb + '\'' +
+                ", pointer='" + pointer + '\'' +
+                ", lowerLimit='" + lowerLimit + '\'' +
+                ", upperLimit='" + upperLimit + '\'' +
                 '}';
     }
 }
