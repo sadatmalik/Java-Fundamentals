@@ -66,7 +66,7 @@ class CustomBST<K extends Comparable<K> ,V> {
 
     public void traversePostOrder() {
         if (root != null) {
-            traversePreOrder(root);
+            traversePostOrder(root);
         } else {
             System.out.println(root.value);
         }
@@ -85,19 +85,19 @@ class CustomBST<K extends Comparable<K> ,V> {
     private void traversePreOrder(Node<K, V> node) {
         System.out.println(node.value);
         if (node.leftChild != null) {
-            traverseInOrder(node.leftChild);
+            traversePreOrder(node.leftChild);
         }
         if (node.rightChild != null) {
-            traverseInOrder(node.rightChild);
+            traversePreOrder(node.rightChild);
         }
     }
 
     private void traversePostOrder(Node<K, V> node) {
         if (node.leftChild != null) {
-            traverseInOrder(node.leftChild);
+            traversePostOrder(node.leftChild);
         }
         if (node.rightChild != null) {
-            traverseInOrder(node.rightChild);
+            traversePostOrder(node.rightChild);
         }
         System.out.println(node.value);
     }
@@ -157,9 +157,9 @@ class CustomBST<K extends Comparable<K> ,V> {
             }
         }
 
-        // otherwise, found a match - remove the node, 3 cases:
+        // otherwise, found a match - remove the node, 4 cases:
         else {
-            // Case 1 - node has 0
+            // Case 1 - node has 0 children
             if (node.leftChild == null && node.rightChild == null) {
                 return null;
             }
@@ -171,12 +171,12 @@ class CustomBST<K extends Comparable<K> ,V> {
             else if (node.rightChild == null) {
                 return node.leftChild;
             }
-            // Case 3 - node has 2 children
+            // Case 4 - node has 2 children
             else {
                 // set sub-tree root to the min of the right sub-tree
                 node = min(node.rightChild);
 
-                // delete the max of the left sub-tree
+                // delete the min of the right sub-tree
                 node.rightChild = delete(node.key, node.rightChild);
             }
         }
