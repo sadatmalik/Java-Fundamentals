@@ -9,9 +9,9 @@ import labs_examples.datastructures.linkedlist.examples.Node;
 
         1.) Create a new CustomBST - ok
         2.) Insert new elements - ok
-        3.) Retrieve elements
+        3.) Retrieve elements - ok
         4.) Update elements
-        5.) Delete elements
+        5.) Delete elements -
         6.) Print elements (Bonus: try in-order traversal, pre-order traversal, post-order traversal) - ok
         7.) Keep the tree well balanced
 
@@ -52,9 +52,8 @@ class CustomBST<K extends Comparable<K> ,V> {
     public void traverseInOrder() {
         if (root != null) {
             traverseInOrder(root);
-        } else {
-            System.out.println(root.value);
         }
+        return;
     }
 
     public void traversePreOrder() {
@@ -103,6 +102,116 @@ class CustomBST<K extends Comparable<K> ,V> {
         System.out.println(node.value);
     }
 
+    public V retrieve(K key) {
+        // if empty, return null
+        if (root == null) {
+            return null;
+        }
+
+        return retrieve(key, root);
+
+    }
+
+    private V retrieve(K key, Node<K, V> node) {
+        // if matches node, return value
+        if (key.equals(node.key)) {
+            return node.value;
+        }
+
+        // traverse left / right sub-trees
+        if (key.compareTo((K)node.key) < 0) {
+            if (node.leftChild != null) {
+                return retrieve(key, node.leftChild);
+            }
+        }
+        else if (key.compareTo((K)node.key) > 0) {
+            if (node.rightChild != null) {
+                return retrieve(key, node.rightChild);
+            }
+        }
+
+        // not found
+        return null;
+    }
+
+    public void delete(K key) {
+        if (root == null) {
+            return;
+        }
+        root = delete(key, root);
+    }
+
+    private Node<K, V> delete(K key, Node<K, V> node) {
+
+        // delete from left sub-tree
+        if (key.compareTo(node.key) < 0) {
+            if (node.leftChild != null) {
+                node.leftChild = delete(key, node.leftChild);
+            }
+        }
+
+        // delete from right sub-tree if key > current node
+        else if (key.compareTo(node.key) > 0) {
+            if (node.rightChild != null) {
+                node.rightChild = delete(key, node.rightChild);
+            }
+        }
+
+        // otherwise, found a match - remove the node, 3 cases:
+        else {
+            // Case 1 - node has 0
+            if (node.leftChild == null && node.rightChild == null) {
+                return null;
+            }
+            // Case 2 - no left child
+            else if (node.leftChild == null) {
+                return node.rightChild;
+            }
+            // Case 3 - no right child
+            else if (node.rightChild == null) {
+                return node.leftChild;
+            }
+            // Case 3 - node has 2 children
+            else {
+                // set sub-tree root to the min of the right sub-tree
+                node = min(node.rightChild);
+
+                // delete the max of the left sub-tree
+                node.rightChild = delete(node.key, node.rightChild);
+            }
+        }
+
+        return node;
+    }
+
+    public V min() {
+        if (root == null) {
+            return null;
+        }
+        return (V)min(root).value;
+    }
+
+    private Node min(Node<K, V> node) {
+        if (node.leftChild == null) {
+            return node;
+        }
+        return min(node.leftChild);
+    }
+
+    public V max() {
+        if (root == null) {
+            return null;
+        }
+        return (V)max(root).value;
+    }
+
+    private Node max(Node<K, V> node) {
+        if (node.rightChild == null) {
+            return node;
+        }
+        return max(node.rightChild);
+    }
+
     class Node<K, V> {
         K key;
         V value;
@@ -134,6 +243,11 @@ public class Exercise_01 {
         bst.insert(34, "Thirty-Four");
         bst.insert(17, "Seventeen");
         bst.insert(37, "Thirty-Seven");
+        bst.insert(9, "Nine");
+        bst.insert(19, "Nineteen");
+        bst.insert(18, "Eighteen");
+        bst.insert(7, "Seven");
+        bst.insert(5, "Five");
 
         System.out.println("In order traversal");
         bst.traverseInOrder();
@@ -143,6 +257,21 @@ public class Exercise_01 {
 
         System.out.println("\nPost order traversal");
         bst.traversePostOrder();
+
+        System.out.println("\nRetrieval");
+        System.out.println("Key(20) = " + bst.retrieve(20));
+        System.out.println("Key(43) = " + bst.retrieve(43));
+        System.out.println("Key(17) = " + bst.retrieve(17));
+        System.out.println("Key(37) = " + bst.retrieve(37));
+
+        System.out.println("\nMin/Max");
+        System.out.println("Min = " + bst.min());
+        System.out.println("Max = " + bst.max());
+
+        System.out.println("\nDelete");
+        System.out.println("Delete(5)");
+        bst.delete(5);
+        bst.traverseInOrder();
 
     }
 }
