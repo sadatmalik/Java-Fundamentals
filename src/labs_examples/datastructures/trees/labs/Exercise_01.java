@@ -30,21 +30,22 @@ class CustomBST<K extends Comparable<K> ,V> {
         }
     }
 
-    private void insert(K key, V value, Node root) {
+    private void insert(K key, V value, Node node) {
+
         // if key < root go left
-        if (key.compareTo((K)root.key) < 0) {
-            if (root.leftChild == null) {
-                root.leftChild = new Node(key, value);
+        if (key.compareTo((K)node.key) < 0) {
+            if (node.leftChild == null) {
+                node.leftChild = new Node(key, value);
             } else {
-                insert(key, value, root.leftChild);
+                insert(key, value, node.leftChild);
             }
         }
         // if > root go right
-        else if (key.compareTo((K)root.key) > 0) {
-            if (root.rightChild == null) {
-                root.rightChild = new Node(key, value);
+        else if (key.compareTo((K)node.key) > 0) {
+            if (node.rightChild == null) {
+                node.rightChild = new Node(key, value);
             } else {
-                insert(key, value, root.rightChild);
+                insert(key, value, node.rightChild);
             }
         }
     }
@@ -118,12 +119,13 @@ class CustomBST<K extends Comparable<K> ,V> {
             return node.value;
         }
 
-        // traverse left / right sub-trees
+        // traverse left sub-tree
         if (key.compareTo((K)node.key) < 0) {
             if (node.leftChild != null) {
                 return retrieve(key, node.leftChild);
             }
         }
+        // travers right sub-tree
         else if (key.compareTo((K)node.key) > 0) {
             if (node.rightChild != null) {
                 return retrieve(key, node.rightChild);
@@ -143,22 +145,8 @@ class CustomBST<K extends Comparable<K> ,V> {
 
     private Node<K, V> delete(K key, Node<K, V> node) {
 
-        // delete from left sub-tree
-        if (key.compareTo(node.key) < 0) {
-            if (node.leftChild != null) {
-                node.leftChild = delete(key, node.leftChild);
-            }
-        }
-
-        // delete from right sub-tree if key > current node
-        else if (key.compareTo(node.key) > 0) {
-            if (node.rightChild != null) {
-                node.rightChild = delete(key, node.rightChild);
-            }
-        }
-
-        // otherwise, found a match - remove the node, 4 cases:
-        else {
+        // found a match - remove the node, 4 cases:
+        if (key == node.key) {
             // Case 1 - node has 0 children
             if (node.leftChild == null && node.rightChild == null) {
                 return null;
@@ -173,11 +161,27 @@ class CustomBST<K extends Comparable<K> ,V> {
             }
             // Case 4 - node has 2 children
             else {
-                // set sub-tree root to the min of the right sub-tree
-                node = min(node.rightChild);
+                // set node's K and V  to the K and V of the min of the right sub-tree
+                Node successor = min(node.rightChild);
+                node.key = (K)successor.key;
+                node.value = (V)successor.value;
 
                 // delete the min of the right sub-tree
                 node.rightChild = delete(node.key, node.rightChild);
+            }
+        }
+
+        // delete from left sub-tree if key < current note key
+        else if (key.compareTo(node.key) < 0) {
+            if (node.leftChild != null) {
+                node.leftChild = delete(key, node.leftChild);
+            }
+        }
+
+        // delete from right sub-tree if key > current node key
+        else if (key.compareTo(node.key) > 0) {
+            if (node.rightChild != null) {
+                node.rightChild = delete(key, node.rightChild);
             }
         }
 
@@ -269,8 +273,24 @@ public class Exercise_01 {
         System.out.println("Max = " + bst.max());
 
         System.out.println("\nDelete");
-        System.out.println("Delete(5)");
+        System.out.println("Delete(5) - no children");
         bst.delete(5);
+        bst.traverseInOrder();
+
+        System.out.println("\nDelete(19) - left child only");
+        bst.delete(19);
+        bst.traverseInOrder();
+
+        System.out.println("\nDelete(34) - right child only");
+        bst.delete(34);
+        bst.traverseInOrder();
+
+        System.out.println("\nDelete(9) - left and right child");
+        bst.delete(9);
+        bst.traverseInOrder();
+
+        System.out.println("\nDelete(9) - no such node");
+        bst.delete(9);
         bst.traverseInOrder();
 
     }
