@@ -171,14 +171,14 @@ class CustomBST<K extends Comparable<K> ,V> {
             }
         }
 
-        // delete from left sub-tree if key < current note key
+        // recursion - delete from left sub-tree if key < current note key
         else if (key.compareTo(node.key) < 0) {
             if (node.leftChild != null) {
                 node.leftChild = delete(key, node.leftChild);
             }
         }
 
-        // delete from right sub-tree if key > current node key
+        // recursion - delete from right sub-tree if key > current node key
         else if (key.compareTo(node.key) > 0) {
             if (node.rightChild != null) {
                 node.rightChild = delete(key, node.rightChild);
@@ -285,12 +285,12 @@ public class Exercise_01 {
         bst.delete(34);
         bst.traverseInOrder();
 
-        System.out.println("\nDelete(9) - left and right child");
-        bst.delete(9);
+        System.out.println("\nDelete(20) - left and right child");
+        bst.delete(20);
         bst.traverseInOrder();
 
-        System.out.println("\nDelete(9) - no such node");
-        bst.delete(9);
+        System.out.println("\nDelete(20) - no such node");
+        bst.delete(20);
         bst.traverseInOrder();
 
     }
