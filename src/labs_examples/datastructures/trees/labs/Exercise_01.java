@@ -30,24 +30,116 @@ class CustomBST<K extends Comparable<K> ,V> {
         }
     }
 
-    private void insert(K key, V value, Node node) {
+    private Node<K, V> insert(K key, V value, Node node) {
 
-        // if key < root go left
+        // if key < node go left
         if (key.compareTo((K)node.key) < 0) {
             if (node.leftChild == null) {
                 node.leftChild = new Node(key, value);
             } else {
-                insert(key, value, node.leftChild);
+                return insert(key, value, node.leftChild);
             }
         }
-        // if > root go right
+        // if key > node go right
         else if (key.compareTo((K)node.key) > 0) {
             if (node.rightChild == null) {
                 node.rightChild = new Node(key, value);
             } else {
-                insert(key, value, node.rightChild);
+                return insert(key, value, node.rightChild);
             }
         }
+
+        // re-balance the tree after insertion
+        return balanceInsert(node);
+    }
+
+    private Node<K, V> balanceInsert(Node<K, V> node) {
+        // check balance factor
+        int leftHeight = height(node.leftChild);
+        int rightHeight = height(node.rightChild);
+
+        int balanceFactor = leftHeight - rightHeight;
+
+        // if left heavy, balance factor > 1;
+        if (balanceFactor > 1) {
+            // if left child is left heavy or balanced
+            if (isLeftHeavy(node.leftChild)) {
+                node = rotateRight(node);
+            }
+            // if left child is right heavy
+            else {
+                node = rotateLeftRight(node);
+            }
+        }
+
+        // if right heavy balance factor < -1;
+        else if (balanceFactor < -1) {
+            // if right child is right heavy or balanced
+            if (isRightHeavy(node.rightChild)) {
+                node = rotateLeft(node);
+            }
+            // else if right child is left heavy
+            else {
+                node = rotateRightLeft(node);
+            }
+        }
+
+        // set node height after any rotations
+        leftHeight = height(node.leftChild);
+        rightHeight = height(node.rightChild);
+
+        node.height = 1 + Math.max(leftHeight, rightHeight);
+
+        return node;
+    }
+
+    private int height(Node<K, V> node) {
+        if (node != null) {
+            return node.height;
+        }
+        return -1;
+    }
+
+    private Node<K, V> rotateRight(Node<K, V> node) {
+        Node<K, V> newHead = node.leftChild;
+        node.leftChild = node.leftChild.rightChild;
+        newHead.rightChild = node;
+
+        return newHead;
+    }
+
+    private Node<K, V> rotateLeftRight(Node<K, V> node) {
+        node.leftChild = rotateLeft(node.leftChild);
+        return rotateRight(node);
+    }
+
+    private Node<K, V> rotateLeft(Node<K, V> node) {
+        Node<K, V> newHead = node.rightChild;
+        node.rightChild = node.rightChild.leftChild;
+        newHead.leftChild = node;
+
+        return newHead;
+    }
+
+    private Node<K, V> rotateRightLeft(Node<K, V> node) {
+        node.rightChild = rotateRight(node.rightChild);
+        return rotateLeft(node);
+    }
+
+    // return true if node is left heavy or balanced
+    private boolean isLeftHeavy(Node<K,V> node) {
+        int leftHeight = height(node.leftChild);
+        int rightHeight = height(node.rightChild);
+
+        return leftHeight >= rightHeight;
+    }
+
+    // return true if node is right heavy or balanced
+    private boolean isRightHeavy(Node<K, V> node) {
+        int leftHeight = height(node.leftChild);
+        int rightHeight = height(node.rightChild);
+
+        return rightHeight >= leftHeight;
     }
 
     public void traverseInOrder() {
@@ -220,12 +312,16 @@ class CustomBST<K extends Comparable<K> ,V> {
         K key;
         V value;
 
+        int height;
+
         Node<K, V> leftChild;
         Node<K, V> rightChild;
 
         public Node(K key, V value) {
             this.key = key;
             this.value = value;
+
+            height = 0;
 
             this.leftChild = null;
             this.rightChild = null;
@@ -238,60 +334,68 @@ public class Exercise_01 {
     public static void main(String[] args) {
         CustomBST<Integer, String> bst = new CustomBST<>();
 
-        bst.insert(20, "Twenty");
-        bst.insert(27, "Twenty-Seven");
-        bst.insert(23, "Twenty-Three");
-        bst.insert(32, "Thirty-Two");
-        bst.insert(43, "Forty-Three");
-        bst.insert(56, "Fifty-Six");
-        bst.insert(34, "Thirty-Four");
-        bst.insert(17, "Seventeen");
-        bst.insert(37, "Thirty-Seven");
-        bst.insert(9, "Nine");
-        bst.insert(19, "Nineteen");
-        bst.insert(18, "Eighteen");
+        bst.insert(3, "Three");
         bst.insert(7, "Seven");
+        bst.insert(1, "One");
         bst.insert(5, "Five");
+        bst.insert(2, "Two");
+        bst.insert(4, "Four");
+        bst.insert(6, "Six");
+
+//        bst.insert(20, "Twenty");
+//        bst.insert(27, "Twenty-Seven");
+//        bst.insert(23, "Twenty-Three");
+//        bst.insert(32, "Thirty-Two");
+//        bst.insert(43, "Forty-Three");
+//        bst.insert(56, "Fifty-Six");
+//        bst.insert(34, "Thirty-Four");
+//        bst.insert(17, "Seventeen");
+//        bst.insert(37, "Thirty-Seven");
+//        bst.insert(9, "Nine");
+//        bst.insert(19, "Nineteen");
+//        bst.insert(18, "Eighteen");
+//        bst.insert(7, "Seven");
+//        bst.insert(5, "Five");
 
         System.out.println("In order traversal");
         bst.traverseInOrder();
 
-        System.out.println("\nPre order traversal");
-        bst.traversePreOrder();
+//        System.out.println("\nPre order traversal");
+//        bst.traversePreOrder();
+//
+//        System.out.println("\nPost order traversal");
+//        bst.traversePostOrder();
+//
+//        System.out.println("\nRetrieval");
+//        System.out.println("Key(20) = " + bst.retrieve(20));
+//        System.out.println("Key(43) = " + bst.retrieve(43));
+//        System.out.println("Key(17) = " + bst.retrieve(17));
+//        System.out.println("Key(37) = " + bst.retrieve(37));
 
-        System.out.println("\nPost order traversal");
-        bst.traversePostOrder();
-
-        System.out.println("\nRetrieval");
-        System.out.println("Key(20) = " + bst.retrieve(20));
-        System.out.println("Key(43) = " + bst.retrieve(43));
-        System.out.println("Key(17) = " + bst.retrieve(17));
-        System.out.println("Key(37) = " + bst.retrieve(37));
-
-        System.out.println("\nMin/Max");
-        System.out.println("Min = " + bst.min());
-        System.out.println("Max = " + bst.max());
-
-        System.out.println("\nDelete");
-        System.out.println("Delete(5) - no children");
-        bst.delete(5);
-        bst.traverseInOrder();
-
-        System.out.println("\nDelete(19) - left child only");
-        bst.delete(19);
-        bst.traverseInOrder();
-
-        System.out.println("\nDelete(34) - right child only");
-        bst.delete(34);
-        bst.traverseInOrder();
-
-        System.out.println("\nDelete(20) - left and right child");
-        bst.delete(20);
-        bst.traverseInOrder();
-
-        System.out.println("\nDelete(20) - no such node");
-        bst.delete(20);
-        bst.traverseInOrder();
+//        System.out.println("\nMin/Max");
+//        System.out.println("Min = " + bst.min());
+//        System.out.println("Max = " + bst.max());
+//
+//        System.out.println("\nDelete");
+//        System.out.println("Delete(5) - no children");
+//        bst.delete(5);
+//        bst.traverseInOrder();
+//
+//        System.out.println("\nDelete(19) - left child only");
+//        bst.delete(19);
+//        bst.traverseInOrder();
+//
+//        System.out.println("\nDelete(34) - right child only");
+//        bst.delete(34);
+//        bst.traverseInOrder();
+//
+//        System.out.println("\nDelete(20) - left and right child");
+//        bst.delete(20);
+//        bst.traverseInOrder();
+//
+//        System.out.println("\nDelete(20) - no such node");
+//        bst.delete(20);
+//        bst.traverseInOrder();
 
     }
 }
