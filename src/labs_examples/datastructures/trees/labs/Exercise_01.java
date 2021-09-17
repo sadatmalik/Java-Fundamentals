@@ -32,21 +32,21 @@ class CustomBST<K extends Comparable<K> ,V> {
 
     private Node<K, V> insert(K key, V value, Node node) {
 
+        if (node == null) {
+            node = new Node(key, value);
+        }
+
         // if key < node go left
         if (key.compareTo((K)node.key) < 0) {
-            if (node.leftChild == null) {
-                node.leftChild = new Node(key, value);
-            } else {
-                return insert(key, value, node.leftChild);
-            }
+            node.leftChild = insert(key, value, node.leftChild);
         }
         // if key > node go right
         else if (key.compareTo((K)node.key) > 0) {
-            if (node.rightChild == null) {
-                node.rightChild = new Node(key, value);
-            } else {
-                return insert(key, value, node.rightChild);
-            }
+            node.rightChild = insert(key, value, node.rightChild);
+        }
+        // prevent duplicates
+        else {
+            return node;
         }
 
         // re-balance the tree after insertion
