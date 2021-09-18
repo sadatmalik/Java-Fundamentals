@@ -334,17 +334,17 @@ public class Exercise_01 {
     public static void main(String[] args) {
         CustomBST<Integer, String> bst = new CustomBST<>();
 
-        bst.insert(3, "Three");
-        bst.insert(7, "Seven");
-        bst.insert(1, "One");
-        bst.insert(5, "Five");
-        bst.insert(2, "Two");
-        bst.insert(4, "Four");
-        bst.insert(6, "Six");
+//        bst.insert(3, "Three");
+//        bst.insert(7, "Seven");
+//        bst.insert(1, "One");
+//        bst.insert(5, "Five");
+//        bst.insert(2, "Two");
+//        bst.insert(4, "Four");
+//        bst.insert(6, "Six");
 
-//        bst.insert(20, "Twenty");
-//        bst.insert(27, "Twenty-Seven");
-//        bst.insert(23, "Twenty-Three");
+        bst.insert(20, "Twenty");
+        bst.insert(27, "Twenty-Seven");
+        bst.insert(23, "Twenty-Three");
 //        bst.insert(32, "Thirty-Two");
 //        bst.insert(43, "Forty-Three");
 //        bst.insert(56, "Fifty-Six");
