@@ -26,7 +26,7 @@ class CustomBST<K extends Comparable<K> ,V> {
         }
         // else insert node into root tree
         else {
-            insert(key, value, root);
+            root = insert(key, value, root);
         }
     }
 
@@ -343,19 +343,19 @@ public class Exercise_01 {
 //        bst.insert(6, "Six");
 
         bst.insert(20, "Twenty");
-        bst.insert(27, "Twenty-Seven");
-        bst.insert(23, "Twenty-Three");
-//        bst.insert(32, "Thirty-Two");
-//        bst.insert(43, "Forty-Three");
-//        bst.insert(56, "Fifty-Six");
-//        bst.insert(34, "Thirty-Four");
-//        bst.insert(17, "Seventeen");
-//        bst.insert(37, "Thirty-Seven");
-//        bst.insert(9, "Nine");
-//        bst.insert(19, "Nineteen");
-//        bst.insert(18, "Eighteen");
-//        bst.insert(7, "Seven");
-//        bst.insert(5, "Five");
+        bst.insert(27, "Twenty-Seven"); // right add ok
+        bst.insert(23, "Twenty-Three"); // right tree lost
+        bst.insert(32, "Thirty-Two"); // right add ok
+        bst.insert(43, "Forty-Three"); // right tree lost
+        bst.insert(56, "Fifty-Six"); // right add ok
+        bst.insert(34, "Thirty-Four"); //right tree lost
+        bst.insert(17, "Seventeen"); // left add ok
+        bst.insert(37, "Thirty-Seven"); // right add ok
+        bst.insert(9, "Nine"); // left add ok
+        bst.insert(19, "Nineteen"); // left add ok
+        bst.insert(18, "Eighteen"); // left tree lost
+        bst.insert(7, "Seven"); // left add ok
+        bst.insert(5, "Five"); // left add ok
 
         System.out.println("In order traversal");
         bst.traverseInOrder();
