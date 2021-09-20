@@ -11,9 +11,9 @@ import labs_examples.datastructures.linkedlist.examples.Node;
         2.) Insert new elements - ok
         3.) Retrieve elements - ok
         4.) Update elements
-        5.) Delete elements -
+        5.) Delete elements - ok
         6.) Print elements (Bonus: try in-order traversal, pre-order traversal, post-order traversal) - ok
-        7.) Keep the tree well balanced
+        7.) Keep the tree well balanced - ok
 
  */
 class CustomBST<K extends Comparable<K> ,V> {
@@ -50,10 +50,10 @@ class CustomBST<K extends Comparable<K> ,V> {
         }
 
         // re-balance the tree after insertion
-        return balanceInsert(node);
+        return balanceOnInsertDelete(node);
     }
 
-    private Node<K, V> balanceInsert(Node<K, V> node) {
+    private Node<K, V> balanceOnInsertDelete(Node<K, V> node) {
         // check balance factor
         int leftHeight = height(node.leftChild);
         int rightHeight = height(node.rightChild);
@@ -301,7 +301,7 @@ class CustomBST<K extends Comparable<K> ,V> {
             }
         }
 
-        return node;
+        return balanceOnInsertDelete(node);
     }
 
     public V min() {
