@@ -250,13 +250,16 @@ class CustomBST<K extends Comparable<K> ,V> {
         if (root == null) {
             return;
         }
+
+        // quick search and return if the node doesn't exist
+        if (retrieve(key, root) == null) {
+            return;
+        }
+
         root = delete(key, root);
     }
 
     private Node<K, V> delete(K key, Node<K, V> node) {
-
-        // quick search and return if the node doesn't exist
-
 
         // found a match - remove the node, 4 cases:
         if (key == node.key) {
