@@ -10,7 +10,7 @@ import labs_examples.datastructures.linkedlist.examples.Node;
         1.) Create a new CustomBST - ok
         2.) Insert new elements - ok
         3.) Retrieve elements - ok
-        4.) Update elements
+        4.) Update elements - ok
         5.) Delete elements - ok
         6.) Print elements (Bonus: try in-order traversal, pre-order traversal, post-order traversal) - ok
         7.) Keep the tree well balanced - ok
@@ -304,6 +304,20 @@ class CustomBST<K extends Comparable<K> ,V> {
         return balanceOnInsertDelete(node);
     }
 
+    public void update(K key, K newKey, V newValue) {
+        // retrieve - return if not exist
+        if (retrieve(key) == null) {
+            System.out.println("No such node for key - " + key);
+            return;
+        }
+
+        // delete existing key/value node
+        delete(key);
+
+        // insert new key/value node
+        insert(newKey, newValue);
+    }
+
     public V min() {
         if (root == null) {
             return null;
@@ -381,26 +395,27 @@ public class Exercise_01 {
         bst.insert(7, "Seven"); // left add ok
         bst.insert(5, "Five"); // left add ok
 
-        System.out.println("In order traversal");
+        System.out.println("TRAVERSAL");
+        System.out.println("In-order traversal");
         bst.traverseInOrder();
 
-        System.out.println("\nPre order traversal");
+        System.out.println("\nPre-order traversal");
         bst.traversePreOrder();
 
-        System.out.println("\nPost order traversal");
+        System.out.println("\nPost-order traversal");
         bst.traversePostOrder();
 
-        System.out.println("\nRetrieval");
+        System.out.println("\nRETRIEVE");
         System.out.println("Key(20) = " + bst.retrieve(20));
         System.out.println("Key(43) = " + bst.retrieve(43));
         System.out.println("Key(17) = " + bst.retrieve(17));
         System.out.println("Key(37) = " + bst.retrieve(37));
 
-        System.out.println("\nMin/Max");
+        System.out.println("\nMIN/MAX");
         System.out.println("Min = " + bst.min());
         System.out.println("Max = " + bst.max());
 
-        System.out.println("\nDelete");
+        System.out.println("\nDELETE");
         System.out.println("Delete(5) - no children");
         bst.delete(5);
         bst.traverseInOrder();
@@ -420,6 +435,14 @@ public class Exercise_01 {
         System.out.println("\nDelete(20) - no such node");
         bst.delete(20);
         bst.traverseInOrder();
+
+        System.out.println("\nUPDATE");
+        System.out.println("Update(32, 11)");
+        bst.update(32, 11, "Eleven");
+        bst.traverseInOrder();
+
+        System.out.println("\nUpdate(32, 11)"); // no such ke
+        bst.update(32, 11, "Eleven");// y
 
     }
 }
