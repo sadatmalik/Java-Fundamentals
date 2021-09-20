@@ -130,7 +130,7 @@ class CustomBST<K extends Comparable<K> ,V> {
         rightHeight = height(newHead.rightChild.rightChild);
 
         newHead.rightChild.height = 1 + Math.max(leftHeight, rightHeight);
-        
+
         return newHead;
     }
 
@@ -255,6 +255,9 @@ class CustomBST<K extends Comparable<K> ,V> {
 
     private Node<K, V> delete(K key, Node<K, V> node) {
 
+        // quick search and return if the node doesn't exist
+
+
         // found a match - remove the node, 4 cases:
         if (key == node.key) {
             // Case 1 - node has 0 children
@@ -378,42 +381,42 @@ public class Exercise_01 {
         System.out.println("In order traversal");
         bst.traverseInOrder();
 
-//        System.out.println("\nPre order traversal");
-//        bst.traversePreOrder();
-//
-//        System.out.println("\nPost order traversal");
-//        bst.traversePostOrder();
-//
-//        System.out.println("\nRetrieval");
-//        System.out.println("Key(20) = " + bst.retrieve(20));
-//        System.out.println("Key(43) = " + bst.retrieve(43));
-//        System.out.println("Key(17) = " + bst.retrieve(17));
-//        System.out.println("Key(37) = " + bst.retrieve(37));
+        System.out.println("\nPre order traversal");
+        bst.traversePreOrder();
 
-//        System.out.println("\nMin/Max");
-//        System.out.println("Min = " + bst.min());
-//        System.out.println("Max = " + bst.max());
-//
-//        System.out.println("\nDelete");
-//        System.out.println("Delete(5) - no children");
-//        bst.delete(5);
-//        bst.traverseInOrder();
-//
-//        System.out.println("\nDelete(19) - left child only");
-//        bst.delete(19);
-//        bst.traverseInOrder();
-//
-//        System.out.println("\nDelete(34) - right child only");
-//        bst.delete(34);
-//        bst.traverseInOrder();
-//
-//        System.out.println("\nDelete(20) - left and right child");
-//        bst.delete(20);
-//        bst.traverseInOrder();
-//
-//        System.out.println("\nDelete(20) - no such node");
-//        bst.delete(20);
-//        bst.traverseInOrder();
+        System.out.println("\nPost order traversal");
+        bst.traversePostOrder();
+
+        System.out.println("\nRetrieval");
+        System.out.println("Key(20) = " + bst.retrieve(20));
+        System.out.println("Key(43) = " + bst.retrieve(43));
+        System.out.println("Key(17) = " + bst.retrieve(17));
+        System.out.println("Key(37) = " + bst.retrieve(37));
+
+        System.out.println("\nMin/Max");
+        System.out.println("Min = " + bst.min());
+        System.out.println("Max = " + bst.max());
+
+        System.out.println("\nDelete");
+        System.out.println("Delete(5) - no children");
+        bst.delete(5);
+        bst.traverseInOrder();
+
+        System.out.println("\nDelete(19) - left child only");
+        bst.delete(19);
+        bst.traverseInOrder();
+
+        System.out.println("\nDelete(34) - right child only");
+        bst.delete(34);
+        bst.traverseInOrder();
+
+        System.out.println("\nDelete(20) - left and right child");
+        bst.delete(20);
+        bst.traverseInOrder();
+
+        System.out.println("\nDelete(20) - no such node");
+        bst.delete(20);
+        bst.traverseInOrder();
 
     }
 }
