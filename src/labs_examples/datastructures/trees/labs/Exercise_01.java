@@ -84,12 +84,6 @@ class CustomBST<K extends Comparable<K> ,V> {
             }
         }
 
-        // set node height after any rotations
-        leftHeight = height(node.leftChild);
-        rightHeight = height(node.rightChild);
-
-        node.height = 1 + Math.max(leftHeight, rightHeight);
-
         return node;
     }
 
@@ -105,12 +99,19 @@ class CustomBST<K extends Comparable<K> ,V> {
         node.leftChild = node.leftChild.rightChild;
         newHead.rightChild = node;
 
-        return newHead;
-    }
+        // set new node height after any rotations
+        int leftHeight = height(newHead.leftChild);
+        int rightHeight = height(newHead.rightChild);
 
-    private Node<K, V> rotateLeftRight(Node<K, V> node) {
-        node.leftChild = rotateLeft(node.leftChild);
-        return rotateRight(node);
+        newHead.height = 1 + Math.max(leftHeight, rightHeight);
+
+        // set new head's left child height
+        leftHeight = height(newHead.leftChild.leftChild);
+        rightHeight = height(newHead.leftChild.rightChild);
+
+        newHead.leftChild.height = 1 + Math.max(leftHeight, rightHeight);
+
+        return newHead;
     }
 
     private Node<K, V> rotateLeft(Node<K, V> node) {
@@ -118,7 +119,24 @@ class CustomBST<K extends Comparable<K> ,V> {
         node.rightChild = node.rightChild.leftChild;
         newHead.leftChild = node;
 
+        // set new node height after any rotations
+        int leftHeight = height(newHead.leftChild);
+        int rightHeight = height(newHead.rightChild);
+
+        newHead.height = 1 + Math.max(leftHeight, rightHeight);
+
+        // set new head's right child height
+        leftHeight = height(newHead.rightChild.leftChild);
+        rightHeight = height(newHead.rightChild.rightChild);
+
+        newHead.rightChild.height = 1 + Math.max(leftHeight, rightHeight);
+        
         return newHead;
+    }
+
+    private Node<K, V> rotateLeftRight(Node<K, V> node) {
+        node.leftChild = rotateLeft(node.leftChild);
+        return rotateRight(node);
     }
 
     private Node<K, V> rotateRightLeft(Node<K, V> node) {
