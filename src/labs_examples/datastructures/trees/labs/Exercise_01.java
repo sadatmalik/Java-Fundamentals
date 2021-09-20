@@ -22,7 +22,7 @@ class CustomBST<K extends Comparable<K> ,V> {
     public void insert(K key, V value) {
         // if empty, set root to new node
         if (root == null) {
-            root = new Node<>(key, value);;
+            root = new Node<>(key, value);
         }
         // else insert node into root tree
         else {
@@ -54,9 +54,13 @@ class CustomBST<K extends Comparable<K> ,V> {
     }
 
     private Node<K, V> balanceOnInsertDelete(Node<K, V> node) {
+
         // check balance factor
         int leftHeight = height(node.leftChild);
         int rightHeight = height(node.rightChild);
+
+        // calculate node height
+        node.height = 1 + Math.max(leftHeight, rightHeight);
 
         int balanceFactor = leftHeight - rightHeight;
 
@@ -87,6 +91,12 @@ class CustomBST<K extends Comparable<K> ,V> {
         return node;
     }
 
+    private void calculateHeight(Node<K, V> node) {
+        int leftHeight = height(node.leftChild);
+        int rightHeight = height(node.rightChild);
+        node.height = 1 + Math.max(leftHeight, rightHeight);
+    }
+
     private int height(Node<K, V> node) {
         if (node != null) {
             return node.height;
@@ -94,42 +104,31 @@ class CustomBST<K extends Comparable<K> ,V> {
         return -1;
     }
 
-    private Node<K, V> rotateRight(Node<K, V> node) {
-        Node<K, V> newHead = node.leftChild;
-        node.leftChild = node.leftChild.rightChild;
-        newHead.rightChild = node;
+    // rotates the node's leftChild to the node position
+    private Node<K, V> rotateRight(Node<K, V> oldHead) {
+        // node's left child will become the new root of this subtree
+        Node<K, V> newHead = oldHead.leftChild;
+        Node<K, V> formerRightChild = newHead.rightChild;
+        newHead.rightChild = oldHead;
+        oldHead.leftChild = formerRightChild;
 
-        // set new node height after any rotations
-        int leftHeight = height(newHead.leftChild);
-        int rightHeight = height(newHead.rightChild);
+        // update heights - bottom up
+        calculateHeight(oldHead);
+        calculateHeight(newHead);
 
-        newHead.height = 1 + Math.max(leftHeight, rightHeight);
-
-        // set new head's left child height
-        leftHeight = height(newHead.leftChild.leftChild);
-        rightHeight = height(newHead.leftChild.rightChild);
-
-        newHead.leftChild.height = 1 + Math.max(leftHeight, rightHeight);
 
         return newHead;
     }
 
-    private Node<K, V> rotateLeft(Node<K, V> node) {
-        Node<K, V> newHead = node.rightChild;
-        node.rightChild = node.rightChild.leftChild;
-        newHead.leftChild = node;
+    private Node<K, V> rotateLeft(Node<K, V> oldHead) {
+        Node<K, V> newHead = oldHead.rightChild;
+        Node<K, V> formerLeftChild = newHead.leftChild;
+        newHead.leftChild = oldHead;
+        oldHead.rightChild = formerLeftChild;
 
-        // set new node height after any rotations
-        int leftHeight = height(newHead.leftChild);
-        int rightHeight = height(newHead.rightChild);
-
-        newHead.height = 1 + Math.max(leftHeight, rightHeight);
-
-        // set new head's right child height
-        leftHeight = height(newHead.rightChild.leftChild);
-        rightHeight = height(newHead.rightChild.rightChild);
-
-        newHead.rightChild.height = 1 + Math.max(leftHeight, rightHeight);
+        // update heights - bottom up
+        calculateHeight(oldHead);
+        calculateHeight(newHead);
 
         return newHead;
     }
@@ -304,6 +303,7 @@ class CustomBST<K extends Comparable<K> ,V> {
         return balanceOnInsertDelete(node);
     }
 
+    // @todo try optimise this to update the node in-place
     public void update(K key, K newKey, V newValue) {
         // retrieve - return if not exist
         if (retrieve(key) == null) {
@@ -359,7 +359,7 @@ class CustomBST<K extends Comparable<K> ,V> {
             this.key = key;
             this.value = value;
 
-            height = 0;
+            this.height = 0;
 
             this.leftChild = null;
             this.rightChild = null;
