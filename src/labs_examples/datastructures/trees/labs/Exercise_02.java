@@ -147,12 +147,18 @@ class Exercise_02 {
         System.out.println("Sad is a trie word? " + t.searchRecursive("Sad"));
 
         t.insertRecursive("Samuel");
+        t.insertRecursive("Santa");
+        t.insertRecursive("Sacramento");
+        t.insertRecursive("Sacred");
 
         System.out.println("\nStarts with Sa: ");
         t.startsWith("Sa");
 
         System.out.println("\nStarts with Ma: ");
-        t.startsWith("Ma");
+        t.startsWith("Ma"); // doesn't return words
+
+        System.out.println("\nStarts with Sac: ");
+        t.startsWith("Sac");
 
     }
 }
