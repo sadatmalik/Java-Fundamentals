@@ -30,7 +30,7 @@ class Trie {
         insertRecursive(root, s);
     }
 
-    void insertRecursive(Node node, String s) {
+    private void insertRecursive(Node node, String s) {
         if (s.equals("")) {
             node.endOfWord = true;
             return;
@@ -70,7 +70,7 @@ class Trie {
         return searchRecursive(root, s);
     }
 
-    boolean searchRecursive(Node node, String s) {
+    private boolean searchRecursive(Node node, String s) {
         if ("".equals(s)) {
             return node.endOfWord;
         }
@@ -81,6 +81,36 @@ class Trie {
             return false;
         }
 
+    }
+
+    void startsWith(String s) {
+        startsWithRecursive(root, s, new StringBuffer());
+    }
+
+    private void startsWithRecursive(Node node, String s, StringBuffer sb) {
+        if ("".equals(s)) {
+            printWords(node, sb);
+            return;
+        }
+
+        if (node.children.containsKey(s.charAt(0))) {
+            sb.append(s.charAt(0));
+            startsWithRecursive(node.children.get(s.charAt(0)),
+                    s.substring(1),
+                    sb);
+        }
+    }
+
+    private void printWords(Node node, StringBuffer sb) {
+        if (node.endOfWord) {
+            System.out.println(sb.toString());
+            return;
+        }
+
+        for (Map.Entry<Character, Node> child : node.children.entrySet()) {
+            StringBuffer sbChild = new StringBuffer(sb).append(child.getKey());
+            printWords(child.getValue(), sbChild);
+        }
     }
 
 }
@@ -115,6 +145,14 @@ class Exercise_02 {
         System.out.println("Sadat is a trie word? " + t.searchRecursive("Sadat"));
         System.out.println("Malik is a trie word? " + t.searchRecursive("Malik"));
         System.out.println("Sad is a trie word? " + t.searchRecursive("Sad"));
+
+        t.insertRecursive("Samuel");
+
+        System.out.println("\nStarts with Sa: ");
+        t.startsWith("Sa");
+
+        System.out.println("\nStarts with Ma: ");
+        t.startsWith("Ma");
 
     }
 }
