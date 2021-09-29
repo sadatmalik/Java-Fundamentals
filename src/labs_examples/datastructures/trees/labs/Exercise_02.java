@@ -54,6 +54,35 @@ class Trie {
         currentNode.endOfWord = true;
     }
 
+    boolean searchIterative(String s) {
+        Node currentNode = root;
+        for (int i = 0; i < s.length(); i++) {
+            if (currentNode.children.containsKey(s.charAt(i))) {
+                currentNode = currentNode.children.get(s.charAt(i));
+            } else {
+                return false;
+            }
+        }
+         return currentNode.endOfWord;
+    }
+
+    boolean searchRecursive(String s) {
+        return searchRecursive(root, s);
+    }
+
+    boolean searchRecursive(Node node, String s) {
+        if ("".equals(s)) {
+            return node.endOfWord;
+        }
+
+        if (node.children.containsKey(s.charAt(0))) {
+            return searchRecursive(node.children.get(s.charAt(0)), s.substring(1, s.length()));
+        } else {
+            return false;
+        }
+
+    }
+
 }
 
 class Node {
@@ -72,8 +101,21 @@ class Exercise_02 {
         Trie t = new Trie();
 
         // comment out one or the other for recursive or iterative insert
-        // t.insertRecursive("Sadat");
-        t.insertIterative("Sadat");
+        t.insertRecursive("Sadat");
+        //t.insertIterative("Sadat");
+
+        // iterative search
+        System.out.println("Iterative search:");
+        System.out.println("Sadat is a trie word? " + t.searchIterative("Sadat"));
+        System.out.println("Malik is a trie word? " + t.searchIterative("Malik"));
+        System.out.println("Sad is a trie word? " + t.searchIterative("Sad"));
+
+        // recursive search
+        System.out.println("\nRecursive search:");
+        System.out.println("Sadat is a trie word? " + t.searchRecursive("Sadat"));
+        System.out.println("Malik is a trie word? " + t.searchRecursive("Malik"));
+        System.out.println("Sad is a trie word? " + t.searchRecursive("Sad"));
+
     }
 }
 
