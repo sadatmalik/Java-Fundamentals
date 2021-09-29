@@ -25,12 +25,12 @@ class Trie {
         root = new Node();
     }
 
-    // insert string
-    void insert(String s) {
-        insert(root, s);
+    // recursive insert string
+    void insertRecursive(String s) {
+        insertRecursive(root, s);
     }
 
-    void insert(Node node, String s) {
+    void insertRecursive(Node node, String s) {
         if (s.equals("")) {
             node.endOfWord = true;
             return;
@@ -38,8 +38,20 @@ class Trie {
             if (!node.children.containsKey(s.charAt(0))) {
                 node.children.put(s.charAt(0), new Node());
             }
-            insert(node.children.get(s.charAt(0)), s.substring(1, s.length()));
+            insertRecursive(node.children.get(s.charAt(0)), s.substring(1, s.length()));
         }
+    }
+
+    void insertIterative(String s) {
+        Node currentNode = root;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (!currentNode.children.containsKey(s.charAt(i))) {
+                currentNode.children.put(s.charAt(i), new Node());
+            }
+            currentNode = currentNode.children.get(s.charAt(i));
+        }
+        currentNode.endOfWord = true;
     }
 
 }
@@ -58,6 +70,18 @@ class Node {
 class Exercise_02 {
     public static void main(String[] args) {
         Trie t = new Trie();
-        t.insert("Sadat");
+
+        // comment out one or the other for recursive or iterative insert
+        // t.insertRecursive("Sadat");
+        t.insertIterative("Sadat");
     }
 }
+
+
+
+
+
+
+
+
+
