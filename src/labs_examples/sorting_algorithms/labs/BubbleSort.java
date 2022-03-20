@@ -5,7 +5,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * O(n!) time complexity - The Bubble Sort is the worst, most inefficient data sorting
+ * O(n^2) time complexity - The Bubble Sort is the worst, most inefficient data sorting
  * method.
  *
  * Relatively easy to understand and visualize.
