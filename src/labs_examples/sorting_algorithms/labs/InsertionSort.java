@@ -26,6 +26,10 @@ public class InsertionSort {
         int[] nums = {1,8,4,6,3};
         insertionSort(nums);
         System.out.println(Arrays.toString(nums));
+
+        nums = new int[] {1,8,4,6,3};
+        recursiveInsertionSort(nums, nums.length);
+        System.out.println(Arrays.toString(nums));
     }
 
     public static void insertionSort(int[] nums) {
@@ -50,6 +54,23 @@ public class InsertionSort {
                 }
             }
         }
+    }
+
+    public static void recursiveInsertionSort(int[] nums, int n) {
+
+        if (n <= 1)
+            return;
+
+        recursiveInsertionSort(nums, n-1);
+
+        int tmp = nums[n-1];
+        int j = n-2;
+
+        while(j >= 0 && nums[j] > tmp) {
+            nums[j+1] = nums[j];
+            j--;
+        }
+        nums[j+1] = tmp;
     }
 
 }
