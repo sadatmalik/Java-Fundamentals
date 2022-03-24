@@ -65,9 +65,46 @@ public class SelectionSort {
         }
     }
 
+    public static void recursiveSelectionSort(int[] nums, int index) {
+
+        // Return when starting index and size are same
+        if (index == nums.length-1)
+            return;
+
+        // calling minimum index function for minimum index
+        int k = minIndex(nums, index);
+
+        // Swapping when index nd minimum index are not same
+        if (k != index){
+            // swap
+            int temp = nums[k];
+            nums[k] = nums[index];
+            nums[index] = temp;
+        }
+        // Recursively calling selection sort function
+        recursiveSelectionSort(nums, index + 1);
+
+    }
+
+    // Return minimum index
+    public static int minIndex(int a[], int idx) {
+        if (idx == a.length-1)
+            return idx;
+
+        // Find minimum of remaining elements
+        int k = minIndex(a, idx+1);
+
+        // Return minimum of current and remaining.
+        return (a[idx] < a[k]) ? idx : k;
+    }
+
     public static void main(String[] args) {
         int[] nums = {34, 24, 8, 11, 7};
         selectionSort(nums);
+        System.out.println(Arrays.toString(nums));
+
+        nums = new int[] {34, 24, 8, 11, 7};
+        recursiveSelectionSort(nums, 0);
         System.out.println(Arrays.toString(nums));
     }
 }
